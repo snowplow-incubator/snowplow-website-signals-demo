@@ -26,8 +26,8 @@ if (isEmbed) {
       hostElem.id = rootId;
       // Optional: position the widget
       hostElem.style.position = "fixed";
-      hostElem.style.bottom = "24px";
-      hostElem.style.right = "24px";
+      hostElem.style.bottom = "0px";
+      hostElem.style.right = "0px";
       hostElem.style.zIndex = "9999";
       document.body.appendChild(hostElem);
     }
