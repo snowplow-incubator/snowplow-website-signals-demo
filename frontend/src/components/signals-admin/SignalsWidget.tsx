@@ -65,21 +65,12 @@ function ExploreComponent({ className, title, description, onClick, nextStep }: 
 function Explore({ className, progress }: ExploreProps) {
     return (
         <>
-            {progress == null && (
+            {(progress == null || progress == "solutions") && (
                 <ExploreComponent
                     className={className}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
-                    onClick={() => (window.location.hash = "#solutions")}
-                    nextStep="Visit the Solutions Page"
-                />
-            )}
-            {progress == "solutions" && (
-                <ExploreComponent
-                    className={className}
-                    title="Continue the tour"
-                    description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
-                    onClick={() => (window.location.hash = "#solutions")}
+                    onClick={() => (window.location.href = "/solutions")}
                     nextStep="Visit the Solutions Page"
                 />
             )}
@@ -89,7 +80,7 @@ function Explore({ className, progress }: ExploreProps) {
                     className={className}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
-                    onClick={() => (window.location.hash = "#pricing")}
+                    onClick={() => (window.location.href = "/pricing")}
                     nextStep="Visit the Pricing Page"
                 />
             )}
@@ -98,7 +89,7 @@ function Explore({ className, progress }: ExploreProps) {
                     className={className}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
-                    onClick={() => (window.location.hash = "#form")}
+                    onClick={() => (window.location.href = "/get-started/book-a-demo-of-snowplow-bdp")}
                     nextStep="Contact Us"
                 />
             )}
