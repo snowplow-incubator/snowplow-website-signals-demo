@@ -27,7 +27,6 @@ interface SignalsWidgetProps {
 
 interface ExploreComponentProps {
     className?: string
-    icon: React.ReactNode
     title: string
     description: string
     onClick: () => void
@@ -39,14 +38,14 @@ interface ExploreProps {
     progress: string | null
 }
 
-function ExploreComponent({ className, icon, title, description, onClick, nextStep }: ExploreComponentProps) {
+function ExploreComponent({ className, title, description, onClick, nextStep }: ExploreComponentProps) {
     return (
-        <div className={cn("bg-white rounded-lg p-4 h-[300px] w-[360px] border", className)}>
+        <div className={cn("bg-white rounded-lg p-4 h-[300px] w-[360px] border border-slate-200", className)}>
             <div className="bg-slate-100 rounded-sm p-4 h-[130px]">
             </div>
             <div className="space-y-3">
                 <h3 className="pt-2 text-lg font-semibold">
-                    {icon}
+                    <SignpostOutlinedIcon fontSize="small" className="h-[25px] inline-block mr-2" style={{ verticalAlign: 'middle' }} />
                     {title}
                 </h3>
                 <p className="text-slate-500 text-sm">
@@ -69,7 +68,6 @@ function Explore({ className, progress }: ExploreProps) {
             {progress == null && (
                 <ExploreComponent
                     className={className}
-                    icon={<SignpostOutlinedIcon />}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
                     onClick={() => (window.location.hash = "#solutions")}
@@ -79,7 +77,6 @@ function Explore({ className, progress }: ExploreProps) {
             {progress == "solutions" && (
                 <ExploreComponent
                     className={className}
-                    icon={<SignpostOutlinedIcon className="inline-block mr-2" style={{ verticalAlign: 'middle' }} />}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
                     onClick={() => (window.location.hash = "#solutions")}
@@ -90,7 +87,6 @@ function Explore({ className, progress }: ExploreProps) {
             {progress == "pricing" && (
                 <ExploreComponent
                     className={className}
-                    icon={<SignpostOutlinedIcon />}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
                     onClick={() => (window.location.hash = "#pricing")}
@@ -100,7 +96,6 @@ function Explore({ className, progress }: ExploreProps) {
             {progress == "form" && (
                 <ExploreComponent
                     className={className}
-                    icon={<SignpostOutlinedIcon />}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
                     onClick={() => (window.location.hash = "#form")}

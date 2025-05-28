@@ -20,21 +20,23 @@ const mountWidget = async () => {
   if (!hostElem) {
     hostElem = document.createElement("div");
     hostElem.id = rootId;
+    // Optional: position the widget
     hostElem.style.position = "fixed";
-    hostElem.style.top = "0";
-    hostElem.style.left = "0";
-    hostElem.style.width = "100vw";
-    hostElem.style.height = "100vh";
+    hostElem.style.bottom = "24px";
+    hostElem.style.right = "24px";
     hostElem.style.zIndex = "9999";
     document.body.appendChild(hostElem);
   }
+
   let shadow = hostElem.shadowRoot;
   if (!shadow) {
     shadow = hostElem.attachShadow({ mode: "open" });
-    await injectCSS(
-      shadow,
-      "https://cdn.jsdelivr.net/gh/snowplow-incubator/snowplow-website-signals-demo@main/frontend/dist/vite-widget.css"
-    );
+    const cssHref =
+      location.hostname === "localhost" || location.hostname === "127.0.0.1"
+        ? "/dist/vite-widget.css"
+        : "https://cdn.jsdelivr.net/gh/snowplow-incubator/snowplow-website-signals-demo@main/frontend/dist/vite-widget.css";
+
+    await injectCSS(shadow, cssHref);
   }
 
   let shadowContainer = shadow.getElementById("shadow-widget-root");
