@@ -21,7 +21,8 @@ interface SignalsWidgetProps {
     conversionScore: number
     isOpen: boolean
     onToggle: () => void
-    attributes?: AttributeItem[]
+    browserAttributes?: AttributeItem[]
+    clickAttributes?: AttributeItem[]
     progress: string | null
 }
 
@@ -53,7 +54,7 @@ function ExploreComponent({ className, title, description, onClick, nextStep }: 
                 </p>
                 <Button
                     variant="outline"
-                    className="bg-[#6638B8] text-white border-slate-200 hover:bg-slate-50 justify-center font-normal"
+                    className="bg-[#6638B8] text-white border-slate-200 hover:bg-[#6638B8] justify-center font-normal"
                     onClick={onClick}
                 >
                     {nextStep}
@@ -102,23 +103,37 @@ function Explore({ className, progress }: ExploreProps) {
     )
 }
 
-export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attributes = [], progress }: SignalsWidgetProps) {
+export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserAttributes = [], clickAttributes = [], progress }: SignalsWidgetProps) {
     const [attributesOpen, setAttributesOpen] = useState(false)
     const [interventionsOpen, setInterventionsOpen] = useState(false)
-    const [animatedIndices, setAnimatedIndices] = useState<number[]>([]);
-    const prevValues = useRef<{ [key: number]: any }>({});
+    const [browserAnimatedIndices, setBrowserAnimatedIndices] = useState<number[]>([]);
+    const [clickAnimatedIndices, setClickAnimatedIndices] = useState<number[]>([]);
+    const browserPrevValues = useRef<{ [key: number]: any }>({});
+    const clickPrevValues = useRef<{ [key: number]: any }>({});
 
     useEffect(() => {
-        attributes.forEach((attribute, idx) => {
-            if (prevValues.current[idx] !== undefined && prevValues.current[idx] !== attribute.value) {
-                setAnimatedIndices((indices) => [...indices, idx]);
+        browserAttributes.forEach((attribute, idx) => {
+            if (browserPrevValues.current[idx] !== undefined && browserPrevValues.current[idx] !== attribute.value) {
+                setBrowserAnimatedIndices((indices) => [...indices, idx]);
                 setTimeout(() => {
-                    setAnimatedIndices((indices) => indices.filter(i => i !== idx));
+                    setBrowserAnimatedIndices((indices) => indices.filter(i => i !== idx));
                 }, 2000);
             }
-            prevValues.current[idx] = attribute.value;
+            browserPrevValues.current[idx] = attribute.value;
         });
-    }, [attributes]);
+    }, [browserAttributes]);
+
+    useEffect(() => {
+        clickAttributes.forEach((attribute, idx) => {
+            if (clickPrevValues.current[idx] !== undefined && clickPrevValues.current[idx] !== attribute.value) {
+                setClickAnimatedIndices((indices) => [...indices, idx]);
+                setTimeout(() => {
+                    setClickAnimatedIndices((indices) => indices.filter(i => i !== idx));
+                }, 2000);
+            }
+            clickPrevValues.current[idx] = attribute.value;
+        });
+    }, [clickAttributes]);
 
 
     // Sample intervention data to match the screenshot
@@ -142,7 +157,8 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
             )}
 
             <motion.div
-                className="fixed top-0 right-0 h-screen w-[450px] top-[78px] bg-white shadow-xl z-50 overflow-y-auto"
+                className="dark fixed right-0 w-[450px] top-[78px] bg-[#101010] shadow-xl z-50 overflow-y-auto"
+                style={{ height: "calc(100vh - 78px)" }}
                 initial={{ x: "100%" }}
                 animate={{ x: isOpen ? 0 : "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 200 }}
@@ -152,7 +168,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
                     <div className="flex justify-between items-start mb-4">
                         <div className="flex flex-col">
                             <div className="flex flex-col items-start gap-2 mb-1">
-                                <SnowplowLogo variant="icon" size="sm" className="text-primary" />
+                                <SnowplowLogo variant="icon" size="sm" />
                                 <h2 className="text-primary text-xl font-bold">SIGNALS</h2>
                             </div>
                             <p className="text-muted-foreground text-sm/6">
@@ -173,7 +189,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
                     <div className="mb-6">
                         <h3 className="text-foreground font-bold text-sm mb-2">Predicted Conversion Score</h3>
                         <div className="flex items-center gap-2">
-                            <div className="h-4 bg-gray-100 rounded-full overflow-hidden mb-1 w-full">
+                            <div className="h-4 bg-[#282828] rounded-full overflow-hidden mb-1 w-full">
                                 <motion.div
                                     className="h-full bg-primary"
                                     initial={{ width: 0 }}
@@ -188,7 +204,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
                     </div>
 
                     {/* Attributes Accordion */}
-                    <div className="border border-border rounded-lg mb-4">
+                    <div className="bg-[#282828] border border-border rounded-lg mb-4">
                         <button
                             onClick={() => setAttributesOpen(!attributesOpen)}
                             className="w-full flex justify-between items-center p-4 text-left focus:outline-none"
@@ -196,7 +212,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
                             aria-controls="attributes-content"
                         >
                             <div className="flex items-center">
-                                <h3 className="font-semibold text-gray-800">Attributes</h3>
+                                <h3 className="font-semibold text-white">Behaviour Attributes</h3>
                             </div>
                             <div>
                                 {attributesOpen ? (
@@ -217,21 +233,42 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
                                     className="overflow-hidden"
                                 >
                                     <div className="px-4 pb-4">
-                                        {attributes.map((attribute, index) => (
-                                            <div key={index} className="flex justify-between items-center mb-2">
-                                                <span className="text-sm text-foreground">{attribute.name}</span>
-                                                <motion.span
-                                                    className="w-[80px] text-center bg-background text-sm border border-border rounded-full text-foreground px-4 py-1 transition-colors duration-300"
-                                                    animate={
-                                                        animatedIndices.includes(index)
-                                                            ? { backgroundColor: "#bbf7d0", borderColor: "#4ade80", opacity: 1 }
-                                                            : { backgroundColor: "#fff", borderColor: "#e5e7eb", opacity: 1 }
-                                                    }
-                                                    transition={{ duration: 0.5 }}
-                                                >
-                                                    {attribute.value != null && attribute.value !== "" ? attribute.value : "N/A"}                                            </motion.span>
-                                            </div>
-                                        ))}
+                                        <div className="p-2">
+                                            <h1 className="text-lg text-white font-bold">Browsing</h1>
+                                            {browserAttributes.map((attribute, index) => (
+                                                <div key={index} className="flex justify-between items-center mb-2">
+                                                    <span className="text-sm text-foreground">{attribute.name}</span>
+                                                    <motion.span
+                                                        className="w-[80px] text-center bg-background text-sm border border-border rounded-full text-foreground px-4 py-1 transition-colors duration-300"
+                                                        animate={
+                                                            browserAnimatedIndices.includes(index)
+                                                                ? { backgroundColor: "#bbf7d0", borderColor: "#4ade80", opacity: 1 }
+                                                                : { backgroundColor: "#000000", borderColor: "#000000", opacity: 1 }
+                                                        }
+                                                        transition={{ duration: 0.5 }}
+                                                    >
+                                                        {attribute.value != null && attribute.value !== "" ? attribute.value : "N/A"}                                            </motion.span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="p-2">
+                                            <h1 className="text-lg text-white font-bold">Click Behaviour</h1>
+                                            {clickAttributes.map((attribute, index) => (
+                                                <div key={index} className="flex justify-between items-center mb-2">
+                                                    <span className="text-sm text-foreground">{attribute.name}</span>
+                                                    <motion.span
+                                                        className="w-[80px] text-center bg-background text-sm border border-border rounded-full text-foreground px-4 py-1 transition-colors duration-300"
+                                                        animate={
+                                                            clickAnimatedIndices.includes(index)
+                                                                ? { backgroundColor: "#bbf7d0", borderColor: "#4ade80", opacity: 1 }
+                                                                : { backgroundColor: "#000000", borderColor: "#000000", opacity: 1 }
+                                                        }
+                                                        transition={{ duration: 0.5 }}
+                                                    >
+                                                        {attribute.value != null && attribute.value !== "" ? attribute.value : "N/A"}                                            </motion.span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </motion.div>
                             )}
@@ -239,7 +276,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
                     </div>
 
                     {/* Interventions Accordion */}
-                    <div className="border border-border rounded-lg mb-4">
+                    <div className="bg-[#282828] border border-border rounded-lg mb-4">
                         <button
                             onClick={() => setInterventionsOpen(!interventionsOpen)}
                             className="w-full flex justify-between items-center p-4 text-left focus:outline-none"
@@ -247,7 +284,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
                             aria-controls="interventions-content"
                         >
                             <div className="flex items-center">
-                                <h3 className="font-semibold text-gray-800">Interventions</h3>
+                                <h3 className="font-semibold text-white">Interventions</h3>
                             </div>
                             <div>
                                 {interventionsOpen ? (

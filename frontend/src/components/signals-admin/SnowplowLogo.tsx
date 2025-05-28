@@ -15,7 +15,7 @@ export function SnowplowLogo({ variant = "full", className = "", size = "md" }: 
     const { width, height } = sizeMap[size]
 
     // Logo color based on theme
-    const logoColor = "#6638B8"
+    const logoColor = "#FFFFFF"
 
     if (variant === "icon") {
         return (
