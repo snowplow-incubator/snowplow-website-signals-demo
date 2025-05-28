@@ -20,14 +20,14 @@ const mountWidget = async () => {
   if (!hostElem) {
     hostElem = document.createElement("div");
     hostElem.id = rootId;
-    // Optional: position the widget
     hostElem.style.position = "fixed";
-    hostElem.style.top = "0px";
-    hostElem.style.right = "0px";
+    hostElem.style.top = "0";
+    hostElem.style.left = "0";
+    hostElem.style.width = "100vw";
+    hostElem.style.height = "100vh";
     hostElem.style.zIndex = "9999";
     document.body.appendChild(hostElem);
   }
-
   let shadow = hostElem.shadowRoot;
   if (!shadow) {
     shadow = hostElem.attachShadow({ mode: "open" });
