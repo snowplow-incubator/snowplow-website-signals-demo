@@ -70,7 +70,7 @@ function Explore({ className, progress }: ExploreProps) {
                     className={className}
                     title="Continue the tour"
                     description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
-                    onClick={() => (window.location.href = "/solutions")}
+                    onClick={() => (window.location.href = "/use-cases")}
                     nextStep="Visit the Solutions Page"
                 />
             )}
@@ -142,7 +142,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, attribut
             )}
 
             <motion.div
-                className="fixed top-0 right-0 h-screen w-[450px] bg-white shadow-xl z-50 overflow-y-auto"
+                className="fixed top-0 right-0 h-screen w-[450px] top-[78px] bg-white shadow-xl z-50 overflow-y-auto"
                 initial={{ x: "100%" }}
                 animate={{ x: isOpen ? 0 : "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 200 }}
