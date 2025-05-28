@@ -22,6 +22,18 @@ function App() {
       }));
   }
 
+  useEffect(() => {
+    if (isSignalsOpen) {
+      document.body.style.marginRight = "450px"; // Match your widget width
+    } else {
+      document.body.style.marginRight = "0";
+    }
+    // Optional: cleanup on unmount
+    return () => {
+      document.body.style.marginRight = "0";
+    };
+  }, [isSignalsOpen]);
+
   // Polling for the attribute showcase when we have an available API
   useEffect(() => {
     const fetchAttributes = async () => {

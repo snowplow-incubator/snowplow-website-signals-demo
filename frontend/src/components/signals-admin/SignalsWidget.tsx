@@ -157,8 +157,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
             )}
 
             <motion.div
-                className="dark fixed right-0 w-[450px] top-[78px] bg-[#101010] shadow-xl z-50 overflow-y-auto"
-                style={{ height: "calc(100vh - 78px)" }}
+                className="dark fixed right-0 w-[450px] bg-[#101010] shadow-xl z-50 overflow-y-auto"
                 initial={{ x: "100%" }}
                 animate={{ x: isOpen ? 0 : "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 200 }}
