@@ -7,16 +7,19 @@ import { getSnowplowIds } from "./lib/utils";
 function App() {
   const [isSignalsOpen, setIsSignalsOpen] = useState(true);
   const [startDemo, setStartDemo] = useState(false);
-  const [attributes, setAttributes] = useState<any[]>([]);
+  const [browserAttributes, setBrowserAttributes] = useState<any[]>([]);
+  const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
 
   const [progress, setProgress] = useState(null);
 
-  function formatAttributes(data: Record<string, any>) {
-    return Object.entries(data).map(([name, valueObj]) => ({
-      name,
-      value: valueObj
-    }));
+  function formatAttributes(data: Record<string, any>, includeAttributes: string[] = []) {
+    return Object.entries(data)
+      .filter(([name]) => includeAttributes.includes(name))
+      .map(([name, valueObj]) => ({
+        name,
+        value: valueObj
+      }));
   }
 
   // Polling for the attribute showcase when we have an available API
@@ -37,9 +40,21 @@ function App() {
         );
 
         const predictionResJson = await predictionRes.json();
-        setAttributes(formatAttributes(predictionResJson.signals));
+        setBrowserAttributes(formatAttributes(predictionResJson.signals, ["latest_app_id", "latest_device_class", "first_mkt_medium_l30d", "first_refr_medium_l30d"]
+        ));
+        setClickAttributes(formatAttributes(predictionResJson.signals, [
+          "num_sessions_l7d",
+          "num_page_views_l7d",
+          "num_page_pings_l7d",
+          "num_pricing_views_l7d",
+          "num_conversions_l7d",
+          "num_form_engagements_l7d",
+          "num_use_cases_views_l7d",
+        ]
+        ));
         setConversionScore(predictionResJson.score * 100);
         setProgress(predictionResJson.progress);
+        console.log(progress)
       }
 
     }
@@ -61,7 +76,8 @@ function App() {
       />
       {startDemo && <SplashScreen onClose={handleOpenDemo} />}
       <SignalsWidget
-        attributes={attributes}
+        browserAttributes={browserAttributes}
+        clickAttributes={clickAttributes}
         isOpen={isSignalsOpen}
         conversionScore={conversionScore}
         progress={progress}

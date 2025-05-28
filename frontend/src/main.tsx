@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./global.css";
 
 // Only use Shadow DOM in production build
-const isEmbed = import.meta.env.MODE === "production"
+const isEmbed = true
 if (isEmbed) {
 
   function injectCSS(shadowRoot: ShadowRoot, cssHref: string): Promise<void> {
