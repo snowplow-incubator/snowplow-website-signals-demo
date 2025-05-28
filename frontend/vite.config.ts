@@ -2,23 +2,22 @@ import path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   build: {
+    lib: {
+      entry: path.resolve(__dirname, "src/main.tsx"),
+      name: "SnowplowWidget",
+      fileName: "vite-widget",
+      formats: ["iife"], // IIFE is best for embeddable widgets
+    },
     rollupOptions: {
-      input: {
-        widget: "src/main.tsx",
-      },
+      external: [],
       output: {
-        dir: "assets",
-        entryFileNames: "vite-[name].js",
-        chunkFileNames: "vite-[name].js",
-        assetFileNames: "vite-[name].[ext]",
+        globals: {},
       },
     },
-    watch: {},
-    emptyOutDir: false,
+    emptyOutDir: true,
   },
   resolve: {
     alias: {
