@@ -7,7 +7,7 @@ import { getSnowplowIds } from "./lib/utils";
 function App() {
   const [isSignalsDemo, setIsSignalsDemo] = useState(false);
   const [openWidget, setOpenWidget] = useState(false);
-  const [openSplashScreen, setOpenSplashScreen] = useState(false);
+  const [demoStart, setDemoStart] = useState(false);
   const [browserAttributes, setBrowserAttributes] = useState<any[]>([]);
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
@@ -47,6 +47,7 @@ function App() {
     const fetchAttributes = async () => {
       const ids = getSnowplowIds();
       if (ids) {
+
         const predictionRes = await fetch(
           `http://localhost:8000/api/predict/`, {
           method: "POST",
@@ -90,18 +91,19 @@ function App() {
 
   const handleOpenDemo = () => {
     setIsSignalsDemo(false)
+    setDemoStart(true);
     setOpenWidget(true);
-    setOpenSplashScreen(false);
+    // setOpenSplashScreen(false);
   }
   return (
     <>
-      {isSignalsDemo && (
+      {/* {isSignalsDemo && (
         <SignalsAdminButton
           active={isSignalsDemo}
           onClick={() => setOpenSplashScreen(true)}
-        />)}
-      {openSplashScreen && <SplashScreen onClose={handleOpenDemo} />}
-      <SignalsWidget
+        />)} */}
+      {isSignalsDemo && <SplashScreen onClose={handleOpenDemo} />}
+      {demoStart && <SignalsWidget
         browserAttributes={browserAttributes}
         clickAttributes={clickAttributes}
         isOpen={openWidget}
@@ -109,6 +111,7 @@ function App() {
         progress={progress}
         onToggle={() => setOpenWidget(!openWidget)}
       />
+      }
     </>
   );
 }
