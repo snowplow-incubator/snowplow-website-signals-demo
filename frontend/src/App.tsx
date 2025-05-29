@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { SignalsAdminButton } from "./components/signals-admin/SignalsAdminButton";
 import { SplashScreen } from "./components/signals-admin/SplashScreen";
 import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
 import { getSnowplowIds, formatAttributes, getPredictionScore, getProgress } from "./lib/utils";
-import { ChevronUp, ChevronDown, X, ArrowLeftFromLine } from "lucide-react"
-
+import { ArrowLeftFromLine } from "lucide-react"
+import { clickAttributesList, browserAttributesList } from "./lib/constants";
 function App() {
   const [isSignalsDemo, setIsSignalsDemo] = useState(false);
   const [openWidget, setOpenWidget] = useState(() => {
@@ -24,11 +23,10 @@ function App() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("signals-demo") === "true") {
-      const stored = localStorage.getItem("openWidget")
-      if (stored === "false") {
-        setIsSignalsDemo(true);
-      }
+    const signalsDemoParam = params.get("signals-demo") === "true";
+    const signalsDemoStorage = localStorage.getItem("signals-demo") === "true";
+    if (signalsDemoParam || signalsDemoStorage) {
+      setIsSignalsDemo(true);
     }
   }, []);
 
@@ -48,9 +46,8 @@ function App() {
     const fetchAttributes = async () => {
       const ids = getSnowplowIds();
       if (ids) {
-        // console.log("Snowplow IDs:", ids);
         const res = await fetch(
-          `https://ff72-2a01-4b00-ae21-b000-245c-29c8-daa0-7a01.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
+          `https://08bd-2a01-4b00-ae21-b000-44a3-1836-7bdb-71c0.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
           {
             method: "GET",
             headers: {
@@ -59,24 +56,8 @@ function App() {
           }
         );
         const resJson = await res.json();
-        setBrowserAttributes(formatAttributes(resJson, [
-          "latest_app_id",
-          "latest_device_class",
-          "first_mkt_medium_l30d",
-          "first_refr_medium_l30d"
-        ]
-        ));
-
-        setClickAttributes(formatAttributes(resJson, [
-          "num_sessions_l7d",
-          "num_page_views_l7d",
-          "num_page_pings_l7d",
-          "num_pricing_views_l7d",
-          "num_conversions_l7d",
-          "num_form_engagements_l7d",
-          "num_use_cases_views_l7d",
-        ]
-        ));
+        setBrowserAttributes(formatAttributes(resJson, browserAttributesList));
+        setClickAttributes(formatAttributes(resJson, clickAttributesList));
         setConversionScore(getPredictionScore(resJson))
         setProgress(getProgress(resJson));
 

@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import {predictionMetrics} from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,8 +27,11 @@ export function getSnowplowIds() {
   };
 }
 
+interface SignalsData {
+  [key: string]: any[];
+}
 
- export function formatAttributes(data: Record<string, any>, includeAttributes: string[] = []) {
+export function formatAttributes(data: SignalsData, includeAttributes: string[] = []) {
     return Object.entries(data)
       .filter(([name]) => includeAttributes.includes(name))
       .map(([name, valueArr]) => ({
@@ -39,14 +43,8 @@ export function getSnowplowIds() {
       }));
   }
 
-export function getPredictionScore(data: Record<string, any>) {
+export function getPredictionScore(data: SignalsData) {
   let prediction = 0;
-  const predictionMetrics = [
-    "num_pricing_views_l7d",
-    "num_form_engagements_l7d",
-    "num_conversions_l7d",
-    "num_use_cases_views_l7d",
-  ];
 
   for (const metric of predictionMetrics) {
     // Each metric is an array with one value, e.g. [0] or [10]
@@ -60,22 +58,11 @@ export function getPredictionScore(data: Record<string, any>) {
   return prediction * 100;
 }
 
-export function getProgress(data: Record<string, any>) {
-    if (data["num_use_cases_views_l7d"][0] == 0) {
-      return "solutions"
-    }
-
-    if (data["num_pricing_views_l7d"][0] == 0) {
-        return "pricing"
-    }
-
-    if (data["num_form_engagements_l7d"][0] == 0) {
-      return "form"
-    }
-      
-    if (data["num_conversions_l7d"][0] == 0) {
-      return "submit"
-    }
-
+export function getProgress(data: Record<string, any>): "solutions" | "pricing" | "form" | "submit" | undefined {
+  if (!data) return undefined;
+  if (!Array.isArray(data["num_use_cases_views_l7d"]) || data["num_use_cases_views_l7d"][0] == 0) return "solutions";
+  if (!Array.isArray(data["num_pricing_views_l7d"]) || data["num_pricing_views_l7d"][0] == 0) return "pricing";
+  if (!Array.isArray(data["num_form_engagements_l7d"]) || data["num_form_engagements_l7d"][0] == 0) return "form";
+  if (!Array.isArray(data["num_conversions_l7d"]) || data["num_conversions_l7d"][0] == 0) return "submit";
+  return undefined;
 }
-    
