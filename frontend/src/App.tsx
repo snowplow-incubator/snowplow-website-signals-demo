@@ -50,13 +50,14 @@ function App() {
       if (ids) {
         // console.log("Snowplow IDs:", ids);
         const res = await fetch(
-          `https://eef2-2a01-4b00-ae21-b000-245c-29c8-daa0-7a01.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
+          `https://ff72-2a01-4b00-ae21-b000-245c-29c8-daa0-7a01.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
           {
             method: "GET",
-            headers: new Headers({
-              "ngrok-skip-browser-warning": "69420",
-            })
-          });
+            headers: {
+              "ngrok-skip-browser-warning": "69420"
+            }
+          }
+        );
         const resJson = await res.json();
         setBrowserAttributes(formatAttributes(resJson, [
           "latest_app_id",
