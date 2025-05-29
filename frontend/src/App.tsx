@@ -16,7 +16,7 @@ function App() {
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
   const [progress, setProgress] = useState<"solutions" | "pricing" | "form" | "submit" | undefined>(undefined);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     localStorage.setItem("openWidget", openWidget ? "true" : "false");
   }, [openWidget]);
@@ -43,6 +43,7 @@ function App() {
 
   // Polling for the attribute showcase when we have an available API
   useEffect(() => {
+    let firstLoad = true;
     const fetchAttributes = async () => {
       const ids = getSnowplowIds();
       if (ids) {
@@ -58,18 +59,19 @@ function App() {
         const resJson = await res.json();
         setBrowserAttributes(formatAttributes(resJson, browserAttributesList));
         setClickAttributes(formatAttributes(resJson, clickAttributesList));
-        setConversionScore(getPredictionScore(resJson))
+        setConversionScore(getPredictionScore(resJson));
         setProgress(getProgress(resJson));
-
+        if (firstLoad) {
+          setLoading(false);
+          firstLoad = false;
+        }
       }
-    }
-
-    const interval = setInterval(fetchAttributes, 2000);
-    return () => {
-      clearInterval(interval);
     };
-  }, []);
 
+    fetchAttributes(); // Run once immediately
+    const interval = setInterval(fetchAttributes, 2000);
+    return () => clearInterval(interval);
+  }, []);
   const handleOpenDemo = () => {
     setIsSignalsDemo(false)
     setDemoStart(true);
@@ -85,6 +87,7 @@ function App() {
         conversionScore={conversionScore}
         progress={progress}
         onToggle={() => setOpenWidget(!openWidget)}
+        loading={loading}
       />
       {!openWidget && !demoStart && (
         <button

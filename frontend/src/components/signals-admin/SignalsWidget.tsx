@@ -21,17 +21,10 @@ interface SignalsWidgetProps {
     browserAttributes?: AttributeItem[]
     clickAttributes?: AttributeItem[]
     progress: string | null | undefined
+    loading?: boolean
 }
 
-export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserAttributes = [], clickAttributes = [], progress }: SignalsWidgetProps) {
-    const [interventionsOpen, setInterventionsOpen] = useState(false)
-
-    // Sample intervention data to match the screenshot
-    const interventions: InterventionItem[] = [
-        { name: "Request a Demo", value: true },
-        { name: "Intervention two", value: false },
-    ]
-
+export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserAttributes = [], clickAttributes = [], progress, loading }: SignalsWidgetProps) {
     return (
         <>
             {/* Fixed Explore component */}
@@ -74,28 +67,45 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         </button>
                     </div>
 
-                    {/* Predicted Conversion Score */}
-                    <div className="mb-6">
-                        <h3 className="text-foreground font-bold text-sm mb-2">Predicted Conversion Score</h3>
-                        <div className="flex items-center gap-2">
-                            <div className="h-4 bg-[#282828] rounded-full overflow-hidden mb-1 w-full">
-                                <motion.div
-                                    className="h-full bg-primary"
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${conversionScore}%` }}
-                                    transition={{ duration: 0.5 }}
-                                />
+                    {/* Loading skeleton or real content */}
+                    {loading ? (
+                        <div>
+                            {/* Skeleton for Predicted Conversion Score */}
+                            <div className="mb-6 animate-pulse">
+                                <div className="h-4 bg-[#282828] rounded-full w-full mb-2" />
+                                <div className="h-4 bg-[#282828] rounded-full w-1/4" />
                             </div>
-                            <div className="flex justify-end">
-                                <span className="text-foreground font-bold">{Math.round(conversionScore)}%</span>
+                            {/* Skeleton for Attributes */}
+                            <div className="mb-6 animate-pulse">
+                                <div className="h-6 bg-[#282828] rounded w-1/2 mb-2" />
+                                <div className="h-4 bg-[#282828] rounded w-full mb-1" />
+                                <div className="h-4 bg-[#282828] rounded w-full mb-1" />
+                                <div className="h-4 bg-[#282828] rounded w-full mb-1" />
                             </div>
                         </div>
-                    </div>
-
-
-                    <Attributes browserAttributes={browserAttributes} clickAttributes={clickAttributes} />
-                    <Interventions />
-
+                    ) : (
+                        <>
+                            {/* Predicted Conversion Score */}
+                            <div className="mb-6">
+                                <h3 className="text-foreground font-bold text-sm mb-2">Predicted Conversion Score</h3>
+                                <div className="flex items-center gap-2">
+                                    <div className="h-4 bg-[#282828] rounded-full overflow-hidden mb-1 w-full">
+                                        <motion.div
+                                            className="h-full bg-primary"
+                                            initial={{ width: 0 }}
+                                            animate={{ width: `${conversionScore}%` }}
+                                            transition={{ duration: 0.5 }}
+                                        />
+                                    </div>
+                                    <div className="flex justify-end">
+                                        <span className="text-foreground font-bold">{Math.round(conversionScore)}%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <Attributes browserAttributes={browserAttributes} clickAttributes={clickAttributes} />
+                            <Interventions />
+                        </>
+                    )}
                 </div>
             </motion.div>
         </>
