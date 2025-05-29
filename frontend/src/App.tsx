@@ -5,12 +5,22 @@ import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
 import { getSnowplowIds } from "./lib/utils";
 
 function App() {
-  const [isSignalsOpen, setIsSignalsOpen] = useState(true);
+  const [isSignalsOpen, setIsSignalsOpen] = useState(false);
   const [startDemo, setStartDemo] = useState(false);
   const [browserAttributes, setBrowserAttributes] = useState<any[]>([]);
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
+  const [isSignalsDemo, setIsSignalsDemo] = useState(false);
 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    console.log(window.location.search)
+    console.log("URL params:", params.toString());
+    if (params.get("signals-demo") === "true") {
+      // Do something, e.g., open the widget automatically
+      setIsSignalsDemo(true);
+    }
+  }, []);
   const [progress, setProgress] = useState(null);
 
   function formatAttributes(data: Record<string, any>, includeAttributes: string[] = []) {
@@ -24,7 +34,7 @@ function App() {
 
   useEffect(() => {
     if (isSignalsOpen) {
-      document.body.style.marginRight = `calc(100vw - 450px)`;
+      document.body.style.marginRight = `450px`;
     } else {
       document.body.style.marginRight = "0";
     }
@@ -86,10 +96,11 @@ function App() {
   }
   return (
     <>
-      <SignalsAdminButton
-        active={startDemo}
-        onClick={() => setStartDemo(!startDemo)}
-      />
+      {isSignalsDemo && (
+        <SignalsAdminButton
+          active={isSignalsDemo}
+          onClick={() => setStartDemo(true)}
+        />)}
       {startDemo && <SplashScreen onClose={handleOpenDemo} />}
       <SignalsWidget
         browserAttributes={browserAttributes}

@@ -12,7 +12,7 @@ export function SignalsAdminButton({
   onClick,
 }: SignalsAdminButtonProps) {
   return (
-    <div className="fixed z-50 bottom-6 right-6">
+    <div className="fixed z-40 bottom-6 right-6">
       <Button
         variant="outline"
         className={`
@@ -21,7 +21,7 @@ export function SignalsAdminButton({
           flex items-center gap-2 rounded-full 
           text-sm font-medium shadow-lg
           px-4 py-2.5 h-auto
-          ${active ? "bg-background/20" : ""}
+          ${active ? "bg-background/100" : ""}
         `}
         onClick={onClick}
       >
