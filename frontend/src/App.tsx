@@ -24,7 +24,7 @@ function App() {
 
   useEffect(() => {
     if (isSignalsOpen) {
-      document.body.style.marginRight = "450px"; // Match your widget width
+      document.body.style.marginRight = `calc(100vw - 450px)`;
     } else {
       document.body.style.marginRight = "0";
     }
@@ -52,7 +52,12 @@ function App() {
         );
 
         const predictionResJson = await predictionRes.json();
-        setBrowserAttributes(formatAttributes(predictionResJson.signals, ["latest_app_id", "latest_device_class", "first_mkt_medium_l30d", "first_refr_medium_l30d"]
+        setBrowserAttributes(formatAttributes(predictionResJson.signals, [
+          "latest_app_id",
+          "latest_device_class",
+          "first_mkt_medium_l30d",
+          "first_refr_medium_l30d"
+        ]
         ));
         setClickAttributes(formatAttributes(predictionResJson.signals, [
           "num_sessions_l7d",
@@ -66,7 +71,6 @@ function App() {
         ));
         setConversionScore(predictionResJson.score * 100);
         setProgress(predictionResJson.progress);
-        console.log(progress)
       }
 
     }
@@ -93,7 +97,7 @@ function App() {
         isOpen={isSignalsOpen}
         conversionScore={conversionScore}
         progress={progress}
-        onToggle={() => setIsSignalsOpen(false)}
+        onToggle={() => setIsSignalsOpen(!isSignalsOpen)}
       />
     </>
   );

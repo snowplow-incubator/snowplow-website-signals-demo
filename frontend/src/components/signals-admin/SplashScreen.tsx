@@ -66,12 +66,12 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
             </Button>
 
             <motion.div
-                className="bg-background rounded-lg px-10 py-10 max-w-[640px] w-full shadow-lg border border-border"
+                className="bg-background bg-white rounded-xl px-10 py-10 max-w-[640px] w-full shadow-lg border border-gray-200"
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
             >
-                <div className="text-left mb-2">
+                <div className=" text-left mb-2">
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -85,7 +85,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.3 }}
-                        className="text-4xl font-bold text-primary tracking-wide mb-3"
+                        className="text-4xl font-bold text-brand tracking-wide mb-3"
                     >
                         SIGNALS DEMO
                     </motion.h1>
@@ -94,7 +94,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.4 }}
-                        className="text-primary text-lg mb-3"
+                        className="text-brand text-lg mb-3"
                     >
                         See real-time personalization powered by your behavioral data.
                     </motion.p>
@@ -112,7 +112,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
                     <motion.div variants={containerVariants} initial="hidden" animate="show" className="space-y-6 text-left p-2 text-sm/6">
                         <motion.div variants={itemVariants} className="flex gap-4">
                             <motion.div
-                                className="flex-shrink-0 w-10 h-10 rounded-full bg-accent border border-border flex items-center justify-center"
+                                className="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 border border-gray-100 flex items-center justify-center"
                                 variants={circleVariants}
                                 initial="initial"
                                 animate="animate"
@@ -130,7 +130,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
 
                         <motion.div variants={itemVariants} className="flex gap-4">
                             <motion.div
-                                className="flex-shrink-0 w-10 h-10 rounded-full bg-accent border border-border flex items-center justify-center"
+                                className="flex-shrink-0 w-10 h-10 rounded-full  bg-gray-100 border border-gray-100  flex items-center justify-center"
                                 variants={circleVariants}
                                 initial="initial"
                                 animate="animate"
@@ -149,7 +149,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
 
                         <motion.div variants={itemVariants} className="flex gap-4">
                             <motion.div
-                                className="flex-shrink-0 w-10 h-10 rounded-full bg-accent border border-border flex items-center justify-center"
+                                className="flex-shrink-0 w-10 h-10 rounded-full  bg-gray-100 border border-gray-100  flex items-center justify-center"
                                 variants={circleVariants}
                                 initial="initial"
                                 animate="animate"
@@ -173,7 +173,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
                     transition={{ delay: 1.4 }} // Delay after all steps have animated
                     className="flex flex-col items-end"
                 >
-                    <Button onClick={onClose} className="w-full max-w-xs">
+                    <Button onClick={onClose} className="w-full max-w-xs bg-brand text-white hover:bg-brand/90 transition-colors">
                         Start your personalized demo
                     </Button>
                     <p className="text-muted-foreground text-sm mt-3">Explore the power of behavioral intelligence.</p>

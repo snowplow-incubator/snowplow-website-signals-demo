@@ -17,6 +17,7 @@ export function SignalsAdminButton({
         variant="outline"
         className={`
           bg-white
+          hover:bg-white
           flex items-center gap-2 rounded-full 
           text-sm font-medium shadow-lg
           px-4 py-2.5 h-auto

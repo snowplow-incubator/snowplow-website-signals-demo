@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
-import { ChevronUp, ChevronDown, X } from "lucide-react"
+import { ChevronUp, ChevronDown, X, ArrowLeftFromLine } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { SnowplowLogo } from "./SnowplowLogo"
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
@@ -54,7 +54,7 @@ function ExploreComponent({ className, title, description, onClick, nextStep }: 
                 </p>
                 <Button
                     variant="outline"
-                    className="bg-[#6638B8] text-white border-slate-200 hover:bg-[#6638B8] justify-center font-normal"
+                    className="bg-[#6638B8] text-white border-slate-200 hover:bg-[#6638B8] hover:text-white justify-center font-normal"
                     onClick={onClick}
                 >
                     {nextStep}
@@ -155,9 +155,19 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                     </div>
                 </div>
             )}
+            {!isOpen && (
+                <button
+                    onClick={onToggle}
+                    className="fixed bg-brand top-6 right-6 text-white hover:text-white transition-colors z-50 w-50 h-50 flex items-center justify-center rounded shadow-lg p-2"
+                    aria-label="Open signals panel"
+                >
+                    <ArrowLeftFromLine size={20} />
+                </button>)
+
+            }
 
             <motion.div
-                className="dark fixed right-0 w-[450px] bg-[#101010] shadow-xl z-50 overflow-y-auto"
+                className="dark h-screen right-0 w-[450px] bg-[#101010] shadow-xl z-50 overflow-y-auto"
                 initial={{ x: "100%" }}
                 animate={{ x: isOpen ? 0 : "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 200 }}
