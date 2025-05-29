@@ -12,6 +12,8 @@ export function getSnowplowIds() {
   const spCookie = cookies.find(
     (c) => c.startsWith("_sp_") && c.trim().toLowerCase().endsWith("_id")
   );  
+  console.log("cookie found:", cookies);
+  console.log("Snowplow cookie found:", spCookie);
   if (!spCookie) return null;
 
   // Get the value part after '='

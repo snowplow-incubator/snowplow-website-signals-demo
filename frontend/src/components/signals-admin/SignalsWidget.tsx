@@ -158,7 +158,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
             {!isOpen && (
                 <button
                     onClick={onToggle}
-                    className="fixed bg-brand top-6 right-6 text-white hover:text-white transition-colors z-50 w-50 h-50 flex items-center justify-center rounded shadow-lg p-2"
+                    className="fixed bg-brand top-[95px] right-6 text-white hover:text-white transition-colors z-50 w-50 h-50 flex items-center justify-center rounded shadow-lg p-2"
                     aria-label="Open signals panel"
                 >
                     <ArrowLeftFromLine size={20} />
