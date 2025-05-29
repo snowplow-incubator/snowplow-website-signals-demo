@@ -3,14 +3,23 @@ import { SignalsAdminButton } from "./components/signals-admin/SignalsAdminButto
 import { SplashScreen } from "./components/signals-admin/SplashScreen";
 import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
 import { getSnowplowIds } from "./lib/utils";
+import { ChevronUp, ChevronDown, X, ArrowLeftFromLine } from "lucide-react"
 
 function App() {
   const [isSignalsDemo, setIsSignalsDemo] = useState(false);
-  const [openWidget, setOpenWidget] = useState(false);
+  const [openWidget, setOpenWidget] = useState(() => {
+    const stored = localStorage.getItem("openWidget");
+    return stored === "true";
+  });
+
   const [demoStart, setDemoStart] = useState(false);
   const [browserAttributes, setBrowserAttributes] = useState<any[]>([]);
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
+
+  useEffect(() => {
+    localStorage.setItem("openWidget", openWidget ? "true" : "false");
+  }, [openWidget]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -103,7 +112,7 @@ function App() {
           onClick={() => setOpenSplashScreen(true)}
         />)} */}
       {isSignalsDemo && <SplashScreen onClose={handleOpenDemo} />}
-      {demoStart && <SignalsWidget
+      <SignalsWidget
         browserAttributes={browserAttributes}
         clickAttributes={clickAttributes}
         isOpen={openWidget}
@@ -111,7 +120,16 @@ function App() {
         progress={progress}
         onToggle={() => setOpenWidget(!openWidget)}
       />
-      }
+      {!openWidget && !demoStart && (
+        <button
+          onClick={() => setOpenWidget(!openWidget)}
+          className="fixed bg-brand top-[95px] right-6 text-white hover:text-white transition-colors z-50 w-12 h-12 flex items-center justify-center rounded shadow-lg p-2"
+          aria-label="Open signals panel"
+        >
+          <ArrowLeftFromLine size={20} />
+        </button>
+      )}
+
     </>
   );
 }
