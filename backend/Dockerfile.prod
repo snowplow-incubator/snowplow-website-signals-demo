@@ -1,0 +1,12 @@
+FROM python:3.12-slim
+
+WORKDIR  /app
+COPY pyproject.toml poetry.lock README.md /app
+COPY /web_demo_backend /app/web_demo_backend
+
+RUN pip3 install poetry
+RUN poetry config virtualenvs.create false
+RUN poetry install 
+
+CMD ["poetry", "run", "start_prod"]
+EXPOSE 8000
