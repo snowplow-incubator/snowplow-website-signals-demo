@@ -5,12 +5,12 @@ import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
 import { getSnowplowIds } from "./lib/utils";
 
 function App() {
-  const [isSignalsOpen, setIsSignalsOpen] = useState(false);
-  const [startDemo, setStartDemo] = useState(false);
+  const [isSignalsDemo, setIsSignalsDemo] = useState(false);
+  const [openWidget, setOpenWidget] = useState(false);
+  const [openSplashScreen, setOpenSplashScreen] = useState(false);
   const [browserAttributes, setBrowserAttributes] = useState<any[]>([]);
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
-  const [isSignalsDemo, setIsSignalsDemo] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -33,7 +33,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (isSignalsOpen) {
+    if (openWidget) {
       document.body.style.marginRight = `450px`;
     } else {
       document.body.style.marginRight = "0";
@@ -42,7 +42,7 @@ function App() {
     return () => {
       document.body.style.marginRight = "0";
     };
-  }, [isSignalsOpen]);
+  }, [openWidget]);
 
   // Polling for the attribute showcase when we have an available API
   useEffect(() => {
@@ -91,24 +91,25 @@ function App() {
   }, []);
 
   const handleOpenDemo = () => {
-    setIsSignalsOpen(true);
-    setStartDemo(false);
+    setIsSignalsDemo(false)
+    setOpenWidget(true);
+    setOpenSplashScreen(false);
   }
   return (
     <>
       {isSignalsDemo && (
         <SignalsAdminButton
           active={isSignalsDemo}
-          onClick={() => setStartDemo(true)}
+          onClick={() => setOpenSplashScreen(true)}
         />)}
-      {startDemo && <SplashScreen onClose={handleOpenDemo} />}
+      {openSplashScreen && <SplashScreen onClose={handleOpenDemo} />}
       <SignalsWidget
         browserAttributes={browserAttributes}
         clickAttributes={clickAttributes}
-        isOpen={isSignalsOpen}
+        isOpen={openWidget}
         conversionScore={conversionScore}
         progress={progress}
-        onToggle={() => setIsSignalsOpen(!isSignalsOpen)}
+        onToggle={() => setOpenWidget(!openWidget)}
       />
     </>
   );
