@@ -13,8 +13,6 @@ export function getSnowplowIds() {
     const [name] = c.split("=");
     return name.startsWith("_sp_") && name.toLowerCase().split(".")[0].endsWith("id");
   });  
-  console.log("cookie found:", cookies);
-  console.log("Snowplow cookie found:", spCookie);
   if (!spCookie) return null;
 
   // Get the value part after '='

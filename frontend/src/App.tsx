@@ -24,8 +24,11 @@ function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("signals-demo") === "true") {
+      const stored = localStorage.getItem("openWidget")
+      if (stored === "false") {
+        setIsSignalsDemo(true);
+      }
       // Do something, e.g., open the widget automatically
-      setIsSignalsDemo(true);
     }
   }, []);
   const [progress, setProgress] = useState(null);
