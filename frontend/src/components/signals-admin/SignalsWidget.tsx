@@ -23,7 +23,7 @@ interface SignalsWidgetProps {
     onToggle: () => void
     browserAttributes?: AttributeItem[]
     clickAttributes?: AttributeItem[]
-    progress: string | null
+    progress: string | null | undefined
 }
 
 interface ExploreComponentProps {
@@ -36,7 +36,7 @@ interface ExploreComponentProps {
 
 interface ExploreProps {
     className?: string
-    progress: string | null
+    progress: string | null | undefined
 }
 
 function ExploreComponent({ className, title, description, onClick, nextStep }: ExploreComponentProps) {

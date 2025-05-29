@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { SignalsAdminButton } from "./components/signals-admin/SignalsAdminButton";
 import { SplashScreen } from "./components/signals-admin/SplashScreen";
 import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
-import { getSnowplowIds } from "./lib/utils";
+import { getSnowplowIds, formatAttributes, getPredictionScore, getProgress } from "./lib/utils";
 import { ChevronUp, ChevronDown, X, ArrowLeftFromLine } from "lucide-react"
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
   const [browserAttributes, setBrowserAttributes] = useState<any[]>([]);
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
+  const [progress, setProgress] = useState<"solutions" | "pricing" | "form" | "submit" | undefined>(undefined);
 
   useEffect(() => {
     localStorage.setItem("openWidget", openWidget ? "true" : "false");
@@ -28,19 +29,8 @@ function App() {
       if (stored === "false") {
         setIsSignalsDemo(true);
       }
-      // Do something, e.g., open the widget automatically
     }
   }, []);
-  const [progress, setProgress] = useState(null);
-
-  function formatAttributes(data: Record<string, any>, includeAttributes: string[] = []) {
-    return Object.entries(data)
-      .filter(([name]) => includeAttributes.includes(name))
-      .map(([name, valueObj]) => ({
-        name,
-        value: valueObj
-      }));
-  }
 
   useEffect(() => {
     if (openWidget) {
@@ -48,7 +38,6 @@ function App() {
     } else {
       document.body.style.marginRight = "0";
     }
-    // Optional: cleanup on unmount
     return () => {
       document.body.style.marginRight = "0";
     };
@@ -59,28 +48,25 @@ function App() {
     const fetchAttributes = async () => {
       const ids = getSnowplowIds();
       if (ids) {
-
-        const predictionRes = await fetch(
-          `http://localhost:8000/api/predict/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            domain_userid: ids.domain_userid,
-          })
-        }
-        );
-
-        const predictionResJson = await predictionRes.json();
-        setBrowserAttributes(formatAttributes(predictionResJson.signals, [
+        // console.log("Snowplow IDs:", ids);
+        const res = await fetch(
+          `https://eef2-2a01-4b00-ae21-b000-245c-29c8-daa0-7a01.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
+          {
+            method: "GET",
+            headers: new Headers({
+              "ngrok-skip-browser-warning": "69420",
+            })
+          });
+        const resJson = await res.json();
+        setBrowserAttributes(formatAttributes(resJson, [
           "latest_app_id",
           "latest_device_class",
           "first_mkt_medium_l30d",
           "first_refr_medium_l30d"
         ]
         ));
-        setClickAttributes(formatAttributes(predictionResJson.signals, [
+
+        setClickAttributes(formatAttributes(resJson, [
           "num_sessions_l7d",
           "num_page_views_l7d",
           "num_page_pings_l7d",
@@ -90,11 +76,12 @@ function App() {
           "num_use_cases_views_l7d",
         ]
         ));
-        setConversionScore(predictionResJson.score * 100);
-        setProgress(predictionResJson.progress);
-      }
+        setConversionScore(getPredictionScore(resJson))
+        setProgress(getProgress(resJson));
 
+      }
     }
+
     const interval = setInterval(fetchAttributes, 2000);
     return () => {
       clearInterval(interval);
@@ -105,15 +92,9 @@ function App() {
     setIsSignalsDemo(false)
     setDemoStart(true);
     setOpenWidget(true);
-    // setOpenSplashScreen(false);
   }
   return (
     <>
-      {/* {isSignalsDemo && (
-        <SignalsAdminButton
-          active={isSignalsDemo}
-          onClick={() => setOpenSplashScreen(true)}
-        />)} */}
       {isSignalsDemo && <SplashScreen onClose={handleOpenDemo} />}
       <SignalsWidget
         browserAttributes={browserAttributes}
