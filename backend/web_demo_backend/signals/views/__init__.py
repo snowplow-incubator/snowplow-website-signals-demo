@@ -1,0 +1,3 @@
+from .user_attributes_view import user_attributes_view
+
+user_attributes_view
