@@ -9,9 +9,10 @@ export function cn(...inputs: ClassValue[]) {
 export function getSnowplowIds() {
   // Find the cookie key that starts with "_sp_"
   const cookies = document.cookie.split("; ");
-  const spCookie = cookies.find(
-    (c) => c.startsWith("_sp_") && c.trim().toLowerCase().endsWith("_id")
-  );  
+  const spCookie = cookies.find((c) => {
+    const [name] = c.split("=");
+    return name.startsWith("_sp_") && name.toLowerCase().split(".")[0].endsWith("id");
+  });  
   console.log("cookie found:", cookies);
   console.log("Snowplow cookie found:", spCookie);
   if (!spCookie) return null;
