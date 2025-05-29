@@ -38,7 +38,7 @@ if (isEmbed) {
       const cssHref =
         location.hostname === "localhost" || location.hostname === "127.0.0.1"
           ? "/dist/vite-widget.css"
-          : "https://cdn.jsdelivr.net/gh/snowplow-incubator/snowplow-website-signals-demo@main/frontend/dist/vite-widget.css";
+          : "https://cdn.jsdelivr.net/gh/snowplow-incubator/snowplow-website-signals-demo@latest/frontend/dist/vite-widget.css";
 
       await injectCSS(shadow, cssHref);
     }
