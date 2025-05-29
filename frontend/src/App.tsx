@@ -14,8 +14,6 @@ function App() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    console.log(window.location.search)
-    console.log("URL params:", params.toString());
     if (params.get("signals-demo") === "true") {
       // Do something, e.g., open the widget automatically
       setIsSignalsDemo(true);
