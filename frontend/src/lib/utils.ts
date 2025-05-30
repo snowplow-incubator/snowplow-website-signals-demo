@@ -75,13 +75,12 @@ export function getPredictionScore(data: SignalsData) {
   return prediction * 100;
 }
 
-export function getProgress(statusDict: InterventionStatusDict, interventionsAttributes: Record<string, any>): "solutions" | "pricing" | "video"| "submit" | "completed" | undefined {
-  console.log(interventionsAttributes)
-  console.log(statusDict)
+export function getProgress(statusDict: InterventionStatusDict, interventionsAttributes: Record<string, any>): "solutions" | "pricing" | "contact" | "video"| "submit" | "completed" | undefined {
   if (!interventionsAttributes || Object.keys(interventionsAttributes).length === 0) return undefined;
   if (statusDict.demo_complete) return "completed";
-  if (statusDict.contact_page_landing) return "submit";
-  if (statusDict.visited_contact) return "video"
+  if (statusDict.visited_contact) return "submit";
+  // if (statusDict.visited_contact) return "video"
+  if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_pricing"]) || interventionsAttributes["visited_pricing"][0] > 0) return "contact";
   if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_pricing"]) || interventionsAttributes["visited_pricing"][0] == 0) return "pricing";
   if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_use_cases"]) || interventionsAttributes["visited_use_cases"][0] == 0) return "solutions";
   return "solutions"

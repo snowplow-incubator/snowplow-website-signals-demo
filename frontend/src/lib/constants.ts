@@ -51,17 +51,25 @@ export const exploreSteps = {
             onClick: () => (window.location.href = "/pricing")
 
         },
-        video: { 
-            href: "", 
-            nextStep: "Watch the Video", 
-            title: "Value Video", 
-            description: "", 
-            videoSrc: "https://www.youtube.com/embed/_o-TO1GB1Bo?autoplay=1&mute=1",
-            onClick: () => {}
-         },
+        contact: { 
+            href: "/get-started/book-a-demo-of-snowplow-bdp", 
+            nextStep: "Visit the Contact Page", 
+            title: "Continue the tour", 
+            description: "" ,
+            videoSrc: undefined,
+            onClick: () => (window.location.href = "/get-started/book-a-demo-of-snowplow-bdp")
+
+        },
+        // video: { 
+        //     href: "", 
+        //     nextStep: "Watch the Video", 
+        //     title: "Value Video", 
+        //     description: "", 
+        //     videoSrc: "https://www.youtube.com/embed/_o-TO1GB1Bo?autoplay=1&mute=1",
+        //     onClick: () => window.open("https://www.youtube.com/watch?v=_o-TO1GB1Bo", "_blank")         },
         submit: { 
             href: "/get-started/book-a-demo-of-snowplow-bdp", 
-            nextStep: "Contact Us", 
+            nextStep: "Submit your details", 
             title: "Convert", 
             description: "" ,
             videoSrc: undefined,

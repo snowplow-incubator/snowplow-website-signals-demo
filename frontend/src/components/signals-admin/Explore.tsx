@@ -21,7 +21,7 @@ function ExploreComponent({ className, title, description, onClick, nextStep, vi
     return (
         <div className={cn("bg-white rounded-lg p-4 h-[300px] w-[360px] border border-slate-200", className)}>
             <div className="bg-slate-100 rounded-sm p-4 h-[130px]">
-                {videoSrc ? (
+                {/* {videoSrc ? (
                     <iframe
                         width="220"
                         height="120"
@@ -32,7 +32,7 @@ function ExploreComponent({ className, title, description, onClick, nextStep, vi
                         className="rounded"
                     />
                 ) : null
-                }
+                } */}
             </div>
             <div className="space-y-3">
                 <h3 className="pt-2 text-lg font-semibold">
@@ -65,7 +65,6 @@ export function Explore({ className, progress }: ExploreProps) {
                     title={stepConfig.title}
                     description={stepConfig?.description}
                     onClick={stepConfig.onClick}
-                    // onClick={() => (window.location.href = stepConfig.href)}
                     nextStep={stepConfig.nextStep}
                     videoSrc={stepConfig.videoSrc}
                 />

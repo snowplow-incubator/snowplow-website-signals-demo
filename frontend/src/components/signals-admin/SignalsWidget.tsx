@@ -23,6 +23,7 @@ interface SignalsWidgetProps {
 export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserAttributes = [], clickAttributes = [], interventionsAttributes = [], loading }: SignalsWidgetProps) {
     const statusDict = getInterventionStatusDict(interventionsAttributes)
     const progress = getProgress(statusDict, interventionsAttributes)
+    console.log(progress, "Progress in SignalsWidget")
 
     return (
         <>
