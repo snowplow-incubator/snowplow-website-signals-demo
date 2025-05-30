@@ -16,7 +16,6 @@ function App() {
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
   const [interventionsAttributes, setInterventionsAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
-  const [progress, setProgress] = useState<"solutions" | "pricing" | "form" | "submit" | undefined>(undefined);
   const [loading, setLoading] = useState(true);
 
 
@@ -65,7 +64,6 @@ function App() {
         setClickAttributes(formatAttributes(resJson, clickAttributesList));
         setInterventionsAttributes(formatAttributes(resJson, interventionsList));
         setConversionScore(getPredictionScore(resJson));
-        setProgress(getProgress(resJson));
         if (firstLoad) {
           setLoading(false);
           firstLoad = false;
@@ -91,7 +89,6 @@ function App() {
         interventionsAttributes={interventionsAttributes}
         isOpen={openWidget}
         conversionScore={conversionScore}
-        progress={progress}
         onToggle={() => setOpenWidget(!openWidget)}
         loading={loading}
       />

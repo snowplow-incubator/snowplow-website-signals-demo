@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
-
+import { exploreSteps } from "@/lib/constants"
 
 interface ExploreComponentProps {
     className?: string
@@ -9,6 +9,7 @@ interface ExploreComponentProps {
     description: string
     onClick: () => void
     nextStep: string
+    videoSrc?: string | undefined
 }
 
 interface ExploreProps {
@@ -16,10 +17,22 @@ interface ExploreProps {
     progress: string | null | undefined
 }
 
-function ExploreComponent({ className, title, description, onClick, nextStep }: ExploreComponentProps) {
+function ExploreComponent({ className, title, description, onClick, nextStep, videoSrc = undefined }: ExploreComponentProps) {
     return (
         <div className={cn("bg-white rounded-lg p-4 h-[300px] w-[360px] border border-slate-200", className)}>
             <div className="bg-slate-100 rounded-sm p-4 h-[130px]">
+                {videoSrc ? (
+                    <iframe
+                        width="220"
+                        height="120"
+                        src="https://www.youtube.com/embed/_o-TO1GB1Bo?autoplay=1&mute=1"
+                        title="YouTube video"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        className="rounded"
+                    />
+                ) : null
+                }
             </div>
             <div className="space-y-3">
                 <h3 className="pt-2 text-lg font-semibold">
@@ -41,12 +54,6 @@ function ExploreComponent({ className, title, description, onClick, nextStep }: 
     )
 }
 export function Explore({ className, progress }: ExploreProps) {
-    const exploreSteps = {
-        solutions: { href: "/use-cases", nextStep: "Visit the Solutions Page" },
-        pricing: { href: "/pricing", nextStep: "Visit the Pricing Page" },
-        form: { href: "/get-started/book-a-demo-of-snowplow-bdp", nextStep: "Contact Us" },
-    };
-
     const step = progress == null ? "solutions" : progress;
     const stepConfig = exploreSteps[step as keyof typeof exploreSteps];
 
@@ -55,13 +62,13 @@ export function Explore({ className, progress }: ExploreProps) {
             {stepConfig ? (
                 <ExploreComponent
                     className={className}
-                    title="Continue the tour"
-                    description="Copy about a feature or functionality the tip is near. Be specific and suggest  actions if possible."
-                    onClick={() => (window.location.href = stepConfig.href)}
+                    title={stepConfig.title}
+                    description={stepConfig?.description}
+                    onClick={stepConfig.onClick}
+                    // onClick={() => (window.location.href = stepConfig.href)}
                     nextStep={stepConfig.nextStep}
+                    videoSrc={stepConfig.videoSrc}
                 />
-            ) : progress === "submit" ? (
-                <h1>Completed</h1>
             ) : null}
         </>
     );

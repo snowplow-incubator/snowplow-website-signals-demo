@@ -3,12 +3,10 @@ import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronUp, ChevronDown } from "lucide-react"
 import { AttributeItem } from "@/lib/types"
-import Confetti from "react-confetti"
 
 interface AttributesProps {
     browserAttributes?: AttributeItem[]
     clickAttributes?: AttributeItem[]
-    progress?: string | null | undefined
 }
 
 const AttributeRow = ({ attribute }: { attribute: AttributeItem }) => {
@@ -28,7 +26,7 @@ const AttributeRow = ({ attribute }: { attribute: AttributeItem }) => {
         <div className="flex justify-between items-center mb-2">
             <span className="text-sm text-foreground">{attribute.name}</span>
             <motion.span
-                className="w-[80px] text-center bg-background text-sm border border-border rounded-full text-foreground px-4 py-1 transition-colors "
+                className="w-[90px] text-center bg-background text-sm border border-border rounded-full text-foreground px-4 py-1 transition-colors "
                 animate={
                     animated
                         ? {
@@ -58,14 +56,6 @@ export function Attributes({ browserAttributes = [], clickAttributes = [] }: Att
         <>
             {/* Attributes Accordion */}
 
-            {/* <Confetti
-                width={450}
-                height={window.innerHeight}
-                numberOfPieces={300}
-                recycle={false}
-                initialVelocityX={10}
-                initialVelocityY={-20}
-            /> */}
 
             <div className="bg-[#282828] border border-border rounded-lg mb-1">
                 <button

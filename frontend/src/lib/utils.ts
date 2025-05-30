@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {predictionMetrics} from "./constants";
-import { AttributeItem } from "@/lib/types";
+import { AttributeItem, InterventionStatusDict } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,6 +26,19 @@ export function getSnowplowIds() {
     domain_userid: split[0],
     domain_sessionid: split[5],
   };
+}
+
+export function clearSpIdCookie() {
+    const cookies = document.cookie.split("; ");
+    const spIdCookie = cookies.find((c) => {
+        const [name] = c.split("=");
+        return name.startsWith("_sp_") && name.toLowerCase().split(".")[0].endsWith("id");
+    });
+    if (spIdCookie) {
+        const [name] = spIdCookie.split("=");
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+    window.location.reload();
 }
 
 interface SignalsData {
@@ -59,17 +72,19 @@ export function getPredictionScore(data: SignalsData) {
   return prediction * 100;
 }
 
-export function getProgress(data: Record<string, any>): "solutions" | "pricing" | "form" | "submit" | undefined {
-  if (!data) return undefined;
-  if (!Array.isArray(data["num_use_cases_views_l7d"]) || data["num_use_cases_views_l7d"][0] == 0) return "solutions";
-  if (!Array.isArray(data["num_pricing_views_l7d"]) || data["num_pricing_views_l7d"][0] == 0) return "pricing";
-  if (!Array.isArray(data["num_form_engagements_l7d"]) || data["num_form_engagements_l7d"][0] == 0) return "form";
-  if (!Array.isArray(data["num_conversions_l7d"]) || data["num_conversions_l7d"][0] == 0) return "submit";
-  return undefined;
+export function getProgress(statusDict: InterventionStatusDict, interventionsAttributes: Record<string, any>): "solutions" | "pricing" | "video"| "submit" | "completed" | undefined {
+  console.log(interventionsAttributes)
+  console.log(statusDict)
+  if (!interventionsAttributes || Object.keys(interventionsAttributes).length === 0) return undefined;
+  if (statusDict.demo_complete) return "completed";
+  if (statusDict.contact_page_landing) return "submit";
+  if (statusDict.visited_contact) return "video"
+  if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_pricing"]) || interventionsAttributes["visited_pricing"][0] == 0) return "pricing";
+  if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_use_cases"]) || interventionsAttributes["visited_use_cases"][0] == 0) return "solutions";
+  return "solutions"
 }
 
-
-export function interventionStatusDict(attributes: AttributeItem[]): Record<string, boolean> {
+export function getInterventionStatusDict(attributes: AttributeItem[]): InterventionStatusDict {
     const result: Record<string, boolean> = {};
     attributes.forEach(attr => {
         let isTrue = false;
