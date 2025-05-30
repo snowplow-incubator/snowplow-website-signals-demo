@@ -32,13 +32,16 @@ export function clearSpIdCookie() {
     const cookies = document.cookie.split("; ");
     const spIdCookie = cookies.find((c) => {
         const [name] = c.split("=");
-        return name.startsWith("_sp_") && name.toLowerCase().split(".")[0].endsWith("id");
+        return name.startsWith("_sp_biz1_id") && name.toLowerCase().split(".")[0].endsWith("id");
     });
+    console.log("Clearing SP ID cookie:", spIdCookie);
     if (spIdCookie) {
         const [name] = spIdCookie.split("=");
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }
     window.location.reload();
+    console.log("Clearing SP ID cookie:", spIdCookie);
+
 }
 
 interface SignalsData {
