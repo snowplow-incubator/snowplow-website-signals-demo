@@ -54,7 +54,10 @@ function ExploreComponent({ className, title, description, onClick, nextStep, vi
     )
 }
 export function Explore({ className, progress }: ExploreProps) {
-    const step = progress == null ? "solutions" : progress;
+    const step = progress == undefined ? undefined : progress;
+    if (!step) {
+        return null; // or return a default component if needed
+    }
     const stepConfig = exploreSteps[step as keyof typeof exploreSteps];
 
     return (

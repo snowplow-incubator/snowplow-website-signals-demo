@@ -80,6 +80,7 @@ export function getProgress(
   interventionsAttributes: AttributeItem[]
 ): "solutions" | "pricing" | "contact" | "video" | "submit" | "completed" | undefined {
   if (!interventionsAttributes || interventionsAttributes.length === 0) return undefined;
+  if (!statusDict.triggered_tour) return undefined;
 
   const getValue = (name: string) => {
     const attr = interventionsAttributes.find(a => a.name === name);
@@ -89,10 +90,6 @@ export function getProgress(
   const visitedUseCases = getValue("visited_use_cases");
   const visitedPricing = getValue("visited_pricing");
   const visitedContact = getValue("visited_contact");
-
-  console.log("Visited Use Cases:", visitedUseCases);
-  console.log("Visited Pricing:", visitedPricing);
-  console.log("Visited Contact:", visitedContact);
 
   // 1. Must finish solutions first
   if (
