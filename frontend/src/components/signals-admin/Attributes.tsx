@@ -3,10 +3,12 @@ import { useState, useRef, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronUp, ChevronDown } from "lucide-react"
 import { AttributeItem } from "@/lib/types"
+import Confetti from "react-confetti"
 
 interface AttributesProps {
     browserAttributes?: AttributeItem[]
     clickAttributes?: AttributeItem[]
+    progress?: string | null | undefined
 }
 
 const AttributeRow = ({ attribute }: { attribute: AttributeItem }) => {
@@ -33,7 +35,7 @@ const AttributeRow = ({ attribute }: { attribute: AttributeItem }) => {
                             backgroundColor: "#bbf7d0", borderColor: "#4ade80", opacity: 1,
                             color: '#000'
                         }
-                        : { backgroundColor: "#000", borderColor: "#000", opacity: 1 } // dark background
+                        : { backgroundColor: "#101010", borderColor: "#101010", opacity: 1 } // dark background
                 }
             >
                 {attribute.value != null && attribute.value !== "" ? attribute.value : "N/A"}
@@ -43,12 +45,29 @@ const AttributeRow = ({ attribute }: { attribute: AttributeItem }) => {
 };
 
 export function Attributes({ browserAttributes = [], clickAttributes = [] }: AttributesProps) {
-    const [attributesOpen, setAttributesOpen] = useState(false)
+    const [attributesOpen, setAttributesOpen] = useState(() => {
+        const stored = localStorage.getItem("attributesOpen");
+        return stored === "true";
+    });
+    const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
 
+    useEffect(() => {
+        localStorage.setItem("attributesOpen", attributesOpen ? "true" : "false");
+    }, [attributesOpen]);
     return (
         <>
             {/* Attributes Accordion */}
-            <div className="bg-[#282828] border border-border rounded-lg mb-4">
+
+            {/* <Confetti
+                width={450}
+                height={window.innerHeight}
+                numberOfPieces={300}
+                recycle={false}
+                initialVelocityX={10}
+                initialVelocityY={-20}
+            /> */}
+
+            <div className="bg-[#282828] border border-border rounded-lg mb-1">
                 <button
                     onClick={() => setAttributesOpen(!attributesOpen)}
                     className="w-full flex justify-between items-center p-4 text-left focus:outline-none"

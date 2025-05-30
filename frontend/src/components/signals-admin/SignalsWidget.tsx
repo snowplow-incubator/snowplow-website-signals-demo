@@ -1,18 +1,11 @@
 
-import { useState, useRef, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { X } from "lucide-react"
-import { cn } from "@/lib/utils"
 import { SnowplowLogo } from "./SnowplowLogo"
 import { Explore } from "./Explore"
 import { Attributes } from "./Attributes"
 import { Interventions } from "./Interventions"
 import { AttributeItem } from "@/lib/types"
-
-interface InterventionItem {
-    name: string
-    value: boolean
-}
 
 interface SignalsWidgetProps {
     conversionScore: number
@@ -20,11 +13,12 @@ interface SignalsWidgetProps {
     onToggle: () => void
     browserAttributes?: AttributeItem[]
     clickAttributes?: AttributeItem[]
+    interventionsAttributes?: AttributeItem[]
     progress: string | null | undefined
     loading?: boolean
 }
 
-export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserAttributes = [], clickAttributes = [], progress, loading }: SignalsWidgetProps) {
+export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserAttributes = [], clickAttributes = [], interventionsAttributes = [], progress, loading }: SignalsWidgetProps) {
     return (
         <>
             {/* Fixed Explore component */}
@@ -45,7 +39,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                 animate={{ x: isOpen ? 0 : "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 200 }}
             >
-                <div className="p-6 flex flex-col h-full">
+                <div className="p-6 flex flex-col ">
                     {/* Header */}
                     <div className="flex justify-between items-start mb-4">
                         <div className="flex flex-col">
@@ -102,8 +96,9 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                                     </div>
                                 </div>
                             </div>
-                            <Attributes browserAttributes={browserAttributes} clickAttributes={clickAttributes} />
-                            <Interventions />
+                            <Attributes progress={progress} browserAttributes={browserAttributes} clickAttributes={clickAttributes} />
+                            <br />
+                            <Interventions interventionsAttributes={interventionsAttributes} />
                         </>
                     )}
                 </div>

@@ -15,6 +15,15 @@ export const browserAttributesList = [
           "first_refr_medium_l30d"
 ]
 
+export const interventionsList = [
+        "demo_complete",
+        "contact_page_landing",
+        "triggered_tour",
+        "visited_contact",
+        "visited_pricing",
+        "visited_use_cases",
+]
+
 export const predictionMetrics = [
           "num_pricing_views_l7d",
           "num_form_engagements_l7d",

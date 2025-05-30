@@ -3,7 +3,7 @@ import { SplashScreen } from "./components/signals-admin/SplashScreen";
 import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
 import { getSnowplowIds, formatAttributes, getPredictionScore, getProgress } from "./lib/utils";
 import { ArrowLeftFromLine } from "lucide-react"
-import { clickAttributesList, browserAttributesList } from "./lib/constants";
+import { clickAttributesList, browserAttributesList, interventionsList } from "./lib/constants";
 function App() {
   const [isSignalsDemo, setIsSignalsDemo] = useState(false);
   const [openWidget, setOpenWidget] = useState(() => {
@@ -14,9 +14,12 @@ function App() {
   const [demoStart, setDemoStart] = useState(false);
   const [browserAttributes, setBrowserAttributes] = useState<any[]>([]);
   const [clickAttributes, setClickAttributes] = useState<any[]>([]);
+  const [interventionsAttributes, setInterventionsAttributes] = useState<any[]>([]);
   const [conversionScore, setConversionScore] = useState(0);
   const [progress, setProgress] = useState<"solutions" | "pricing" | "form" | "submit" | undefined>(undefined);
   const [loading, setLoading] = useState(true);
+
+
   useEffect(() => {
     localStorage.setItem("openWidget", openWidget ? "true" : "false");
   }, [openWidget]);
@@ -48,7 +51,7 @@ function App() {
       const ids = getSnowplowIds();
       if (ids) {
         const res = await fetch(
-          `https://08bd-2a01-4b00-ae21-b000-44a3-1836-7bdb-71c0.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
+          `https://34f6-2a01-4b00-ae21-b000-44a3-1836-7bdb-71c0.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
           {
             method: "GET",
             headers: {
@@ -57,8 +60,10 @@ function App() {
           }
         );
         const resJson = await res.json();
+        console.log("Fetched attributes:", resJson);
         setBrowserAttributes(formatAttributes(resJson, browserAttributesList));
         setClickAttributes(formatAttributes(resJson, clickAttributesList));
+        setInterventionsAttributes(formatAttributes(resJson, interventionsList));
         setConversionScore(getPredictionScore(resJson));
         setProgress(getProgress(resJson));
         if (firstLoad) {
@@ -83,6 +88,7 @@ function App() {
       <SignalsWidget
         browserAttributes={browserAttributes}
         clickAttributes={clickAttributes}
+        interventionsAttributes={interventionsAttributes}
         isOpen={openWidget}
         conversionScore={conversionScore}
         progress={progress}

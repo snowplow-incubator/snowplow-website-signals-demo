@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {predictionMetrics} from "./constants";
+import { AttributeItem } from "@/lib/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -65,4 +66,27 @@ export function getProgress(data: Record<string, any>): "solutions" | "pricing" 
   if (!Array.isArray(data["num_form_engagements_l7d"]) || data["num_form_engagements_l7d"][0] == 0) return "form";
   if (!Array.isArray(data["num_conversions_l7d"]) || data["num_conversions_l7d"][0] == 0) return "submit";
   return undefined;
+}
+
+
+export function interventionStatusDict(attributes: AttributeItem[]): Record<string, boolean> {
+    const result: Record<string, boolean> = {};
+    attributes.forEach(attr => {
+        let isTrue = false;
+        if (typeof attr.value === "number") isTrue = attr.value > 0;
+        else if (typeof attr.value === "boolean") isTrue = attr.value;
+        else if (typeof attr.value === "string" && !isNaN(Number(attr.value))) isTrue = Number(attr.value) > 0;
+        result[attr.name] = isTrue;
+    });
+
+    // Check if all three key visits are true
+    const keyVisits = ["visited_contact", "visited_pricing", "visited_use_cases"];
+    result["key_visits"] = keyVisits.every(key => result[key]);
+
+    const remove = ["visited_pricing", "visited_use_cases"];
+
+    // Remove the individual keys from the result
+    remove.forEach(key => delete result[key]);
+
+    return result;
 }
