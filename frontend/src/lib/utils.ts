@@ -75,15 +75,51 @@ export function getPredictionScore(data: SignalsData) {
   return prediction * 100;
 }
 
-export function getProgress(statusDict: InterventionStatusDict, interventionsAttributes: Record<string, any>): "solutions" | "pricing" | "contact" | "video"| "submit" | "completed" | undefined {
-  if (!interventionsAttributes || Object.keys(interventionsAttributes).length === 0) return undefined;
+export function getProgress(
+  statusDict: InterventionStatusDict,
+  interventionsAttributes: AttributeItem[]
+): "solutions" | "pricing" | "contact" | "video" | "submit" | "completed" | undefined {
+  if (!interventionsAttributes || interventionsAttributes.length === 0) return undefined;
+
+  const getValue = (name: string) => {
+    const attr = interventionsAttributes.find(a => a.name === name);
+    return attr ? attr.value : undefined;
+  };
+
+  const visitedUseCases = getValue("visited_use_cases");
+  const visitedPricing = getValue("visited_pricing");
+  const visitedContact = getValue("visited_contact");
+
+  console.log("Visited Use Cases:", visitedUseCases);
+  console.log("Visited Pricing:", visitedPricing);
+  console.log("Visited Contact:", visitedContact);
+
+  // 1. Must finish solutions first
+  if (
+    visitedUseCases == null || visitedUseCases === 0) 
+   {
+    return "solutions";
+  }
+
+  // 2. Then pricing
+  if (
+    visitedPricing == null || visitedPricing === 0)
+ {
+    return "pricing";
+  }
+
+
+  // 3. Then contact
+  if (
+    visitedContact == null || visitedContact === 0) {
+    return "contact";
+  }
+
+  // 4. Only after all above, allow submit and completed
   if (statusDict.demo_complete) return "completed";
   if (statusDict.visited_contact) return "submit";
-  // if (statusDict.visited_contact) return "video"
-  if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_pricing"]) || interventionsAttributes["visited_pricing"][0] > 0) return "contact";
-  if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_pricing"]) || interventionsAttributes["visited_pricing"][0] == 0) return "pricing";
-  if (statusDict.triggered_tour && !Array.isArray(interventionsAttributes["visited_use_cases"]) || interventionsAttributes["visited_use_cases"][0] == 0) return "solutions";
-  return "solutions"
+
+  return "solutions";
 }
 
 export function getInterventionStatusDict(attributes: AttributeItem[]): InterventionStatusDict {

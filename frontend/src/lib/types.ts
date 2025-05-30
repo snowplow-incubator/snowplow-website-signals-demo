@@ -1,6 +1,6 @@
 export interface AttributeItem {
     name: string
-    value: string
+    value: string | number
 }
 
 export type InterventionStatusDict = {
