@@ -8,6 +8,7 @@ import { Attributes } from "./Attributes"
 import { Interventions } from "./Interventions"
 import { AttributeItem } from "@/lib/types"
 import { getInterventionStatusDict, getProgress, clearSpIdCookie } from "@/lib/utils"
+import { handleRestartDemo } from "@/lib/constants"
 
 interface SignalsWidgetProps {
     conversionScore: number
@@ -119,7 +120,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                     {/* Restart Demo Button at the bottom */}
                     <div className="mt-auto pt-6 flex justify-center">
                         <button
-                            onClick={clearSpIdCookie}
+                            onClick={handleRestartDemo}
                             className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
                         >
                             Restart Demo
