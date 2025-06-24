@@ -4,7 +4,12 @@ import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
 import { getSnowplowIds, formatAttributes, getPredictionScore, getProgress } from "./lib/utils";
 import { ArrowLeftFromLine } from "lucide-react"
 import { clickAttributesList, browserAttributesList, interventionsList } from "./lib/constants";
+
 function App() {
+  const snowplowIds = getSnowplowIds();
+  if (snowplowIds === null) {
+    localStorage.setItem("openWidget", "false");
+  }
   const [isSignalsDemo, setIsSignalsDemo] = useState(false);
   const [openWidget, setOpenWidget] = useState(() => {
     const stored = localStorage.getItem("openWidget");
@@ -50,7 +55,7 @@ function App() {
       const ids = getSnowplowIds();
       if (ids) {
         const res = await fetch(
-          `https://34f6-2a01-4b00-ae21-b000-44a3-1836-7bdb-71c0.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
+          `https://5e07-2a01-4b00-ae21-b000-202b-8b36-56a5-a4af.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
           {
             method: "GET",
             headers: {
@@ -75,11 +80,18 @@ function App() {
     const interval = setInterval(fetchAttributes, 2000);
     return () => clearInterval(interval);
   }, []);
+
   const handleOpenDemo = () => {
     setIsSignalsDemo(false)
+    if (snowplowIds === null) {
+      setOpenWidget(false);
+      return
+    }
+
     setDemoStart(true);
     setOpenWidget(true);
   }
+
   return (
     <>
       {isSignalsDemo && <SplashScreen onClose={handleOpenDemo} />}
@@ -92,9 +104,9 @@ function App() {
         onToggle={() => setOpenWidget(!openWidget)}
         loading={loading}
       />
-      {!openWidget && !demoStart && (
+      {!openWidget && !demoStart && isSignalsDemo && (
         <button
-          onClick={() => setOpenWidget(!openWidget)}
+          onClick={handleOpenDemo}
           className="fixed bg-brand top-[95px] right-6 text-white hover:text-white transition-colors z-50 w-12 h-12 flex items-center justify-center rounded shadow-lg p-2"
           aria-label="Open signals panel"
         >
