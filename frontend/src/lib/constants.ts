@@ -1,4 +1,4 @@
-import {clearSpIdCookie} from "./utils";
+import {clearSpCookies} from "./utils";
 
 export const clickAttributesList = [    
           "num_sessions_l7d",
@@ -94,5 +94,5 @@ export function handleRestartDemo() {
     localStorage.removeItem("interventionsOpen");
     localStorage.removeItem("signals-demo");
     // Clear Snowplow cookie and reload
-    clearSpIdCookie();
+    clearSpCookies();
 }

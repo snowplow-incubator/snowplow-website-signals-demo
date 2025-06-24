@@ -7,7 +7,7 @@ import { Explore } from "./Explore"
 import { Attributes } from "./Attributes"
 import { Interventions } from "./Interventions"
 import { AttributeItem } from "@/lib/types"
-import { getInterventionStatusDict, getProgress, clearSpIdCookie } from "@/lib/utils"
+import { getInterventionStatusDict, getProgress } from "@/lib/utils"
 import { handleRestartDemo } from "@/lib/constants"
 
 interface SignalsWidgetProps {

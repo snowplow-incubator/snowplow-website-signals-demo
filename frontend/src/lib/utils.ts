@@ -28,12 +28,20 @@ export function getSnowplowIds() {
   };
 }
 
-export function clearSpIdCookie() {
+export function clearSpCookies() {
     document.cookie
     .split("; ")
     .forEach(cookie => {
       const [name] = cookie.split("=");
       if (name.startsWith("_sp")) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      }
+    });
+    document.cookie
+    .split("; ")
+    .forEach(cookie => {
+      const [name] = cookie.split("=");
+      if (name.startsWith("sp")) {
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       }
     });
