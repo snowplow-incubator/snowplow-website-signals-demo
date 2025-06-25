@@ -55,7 +55,7 @@ function App() {
       const ids = getSnowplowIds();
       if (ids) {
         const res = await fetch(
-          `https://5e07-2a01-4b00-ae21-b000-202b-8b36-56a5-a4af.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
+          `https://healthy-squid-normally.ngrok-free.app/api/web_features?domainUserId=${ids.domain_userid}`,
           {
             method: "GET",
             headers: {
