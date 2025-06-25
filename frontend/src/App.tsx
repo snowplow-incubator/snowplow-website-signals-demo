@@ -85,11 +85,13 @@ function App() {
     setIsSignalsDemo(false)
     if (snowplowIds === null) {
       setOpenWidget(false);
+      window.location.reload();
       return
     }
 
     setDemoStart(true);
     setOpenWidget(true);
+
   }
 
   return (

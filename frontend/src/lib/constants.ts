@@ -84,4 +84,5 @@ export function handleRestartDemo() {
     localStorage.removeItem("clickedSteps");
     // Clear Snowplow cookie and reload
     clearSpCookies();
+    window.location.href = "https://snowplow.io?signals-demo=true";
 }
