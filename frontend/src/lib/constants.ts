@@ -66,7 +66,7 @@ export const exploreSteps = {
 
         },
         completed: { 
-            href: "/", 
+            href: "https://snowplow.io", 
             nextStep: "Return to Main Page", 
             title: "Demo Complete!",
             description: "You've been classified as likely to convert based on your behaviour",
@@ -81,6 +81,7 @@ export function handleRestartDemo() {
     localStorage.removeItem("attributesOpen");
     localStorage.removeItem("interventionsOpen");
     localStorage.removeItem("signals-demo");
+    localStorage.removeItem("clickedSteps");
     // Clear Snowplow cookie and reload
     clearSpCookies();
 }

@@ -108,13 +108,13 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                             transition={{ duration: 0.2 }}
                             className="overflow-hidden"
                         >
-                            <div className="px-4 pb-4">(
+                            <div className="px-4 pb-4">
                                 <>
                                     <div className="relative pl-4">
                                         {/* Vertical line */}
                                         <div className="absolute left-[46px] top-0 bottom-0 w-px bg-[#737373] z-0" />
                                         <div className="relative z-10 flex flex-col gap-3 ">
-                                            {statusDict.demo_complete && (
+                                            {statusDict.waited_on_landing_page && statusDict.customers_page_vistited && statusDict.demo_complete && (
                                                 <InterventionRow
                                                     customIndex={0}
 
@@ -125,7 +125,7 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                                                     description="You've completed the Snowplow Signals demo."
                                                 />
                                             )}
-                                            {(statusDict.waited_on_landing_page && statusDict.customers_page_viewed) && (
+                                            {(statusDict.waited_on_landing_page && statusDict.customers_page_vistited) && (
                                                 <InterventionRow
                                                     customIndex={1}
                                                     name="Viewed Ecommerce Pages"
@@ -166,7 +166,7 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                                     </div>
 
                                 </>
-                                )
+
                             </div>
                         </motion.div>
                     )}

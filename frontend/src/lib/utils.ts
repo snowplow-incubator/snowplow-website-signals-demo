@@ -126,14 +126,27 @@ export function getProgress(
 }
 
 export function getInterventionStatusDict(attributes: AttributeItem[]): InterventionStatusDict {
-    const result: Record<string, boolean> = {};
-    attributes.forEach(attr => {
-        let isTrue = false;
-        if (typeof attr.value === "number") isTrue = attr.value > 0;
-        else if (typeof attr.value === "boolean") isTrue = attr.value;
-        else if (typeof attr.value === "string" && !isNaN(Number(attr.value))) isTrue = Number(attr.value) > 0;
-        result[attr.name] = isTrue;
-    });
+
+    const waited = attributes.find(attr => attr.name === "waited_on_landing_page");
+    const customers = attributes.find(attr => attr.name === "customers_page_viewed");
+    const demo = attributes.find(attr => attr.name === "demo_complete");
+    return {
+        waited_on_landing_page: waited ? Number(waited.value) >= 2 : false,
+        customers_page_vistited: customers ? Number(customers.value) >= 2 : false,
+        demo_complete: demo ? Number(demo.value) > 0 : false,
+
+    };
+}
+    // const result: Record<string, boolean> = {};
+    // ;
+
+    // attributes.forEach(attr => {
+    //     let isTrue = false;
+    //     if (typeof attr.value === "number") isTrue = attr.value > 0;
+    //     else if (typeof attr.value === "boolean") isTrue = attr.value;
+    //     else if (typeof attr.value === "string" && !isNaN(Number(attr.value))) isTrue = Number(attr.value) > 0;
+    //     result[attr.name] = isTrue;
+    // });
 
     // Check if all three key visits are true
     // const keyVisits = ["waited_on_landing_page", "customers_page_viewed"];
@@ -144,5 +157,5 @@ export function getInterventionStatusDict(attributes: AttributeItem[]): Interven
     // // Remove the individual keys from the result
     // remove.forEach(key => delete result[key]);
 
-    return result;
-}
+    // return result;
+// }
