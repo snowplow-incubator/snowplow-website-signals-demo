@@ -87,13 +87,13 @@ export function Attributes({ browserAttributes = [], clickAttributes = [] }: Att
                         >
                             <div className="px-4 pb-4">
                                 <div className="p-2">
-                                    <h1 className="text-lg text-white font-bold">Browsing</h1>
+                                    {/* <h1 className="text-lg text-white font-bold">Browsing</h1> */}
                                     {browserAttributes.map((attribute, index) => (
                                         <AttributeRow attribute={attribute} />
                                     ))}
-                                </div>
-                                <div className="p-2">
-                                    <h1 className="text-lg text-white font-bold">Click Behaviour</h1>
+                                    {/* </div>
+                                <div className="p-2"> */}
+                                    {/* <h1 className="text-lg text-white font-bold">Click Behaviour</h1> */}
                                     {clickAttributes.map((attribute, index) => (
                                         <AttributeRow attribute={attribute} />
                                     ))}

@@ -80,7 +80,7 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
     return (
         <>
             {/* Interventions Accordion */}
-            <div className="bg-[#282828] border border-border rounded-lg mb-4">
+            <div className="bg-[#282828] border border-border rounded-lg mb-4 ">
                 <button
                     onClick={() => setInterventionsOpen(!interventionsOpen)}
                     className="w-full flex justify-between items-center p-4 text-left focus:outline-none"
@@ -108,7 +108,7 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                             transition={{ duration: 0.2 }}
                             className="overflow-hidden"
                         >
-                            <div className="px-4 pb-4">
+                            <div className="px-4 pb-4 max-h-32 overflow-y-auto">
                                 {!statusDict.waited_on_landing_page ? (
                                     <div className="w-full p-4 text-muted-foreground flex items-center justify-around">
                                         <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>

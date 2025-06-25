@@ -59,14 +59,14 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                     {/* Header */}
                     <div className="flex justify-between items-start mb-4">
                         <div className="flex flex-col">
-                            <div className="flex flex-col items-start gap-2 mb-1">
+                            <div className="flex flex-row items-start gap-2 mb-1">
                                 <SnowplowLogo variant="icon" size="sm" />
                                 <h2 className="text-primary text-xl font-bold">SIGNALS</h2>
                             </div>
-                            <p className="text-muted-foreground text-sm/6">
+                            {/* <p className="text-muted-foreground text-sm/6">
                                 You're now seeing a live stream of behavioral attributes according to your current browsing and interactions.
                                 Note: Every attribute, scoring rule and intervention is fully customizable and defined to fit your business.
-                            </p>
+                            </p> */}
                         </div>
                         <button
                             onClick={onToggle}
@@ -97,7 +97,8 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         <>
                             {/* Predicted Conversion Score */}
                             <div className="mb-6">
-                                <h3 className="text-foreground font-bold text-sm mb-2">This score updates live based on your behavior</h3>
+                                <h3 className="text-foreground font-bold text-sm mb-2">Propensity to Convert</h3>
+                                {/* <h3 className="text-muted-foreground font-bold text-sm mb-2">This score updates live based on your behavior</h3> */}
                                 <div className="flex items-center gap-2">
                                     <div className="h-4 bg-[#282828] rounded-full overflow-hidden mb-1 w-full">
                                         <motion.div
@@ -118,7 +119,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         </>
                     )}
                     {/* Restart Demo Button at the bottom */}
-                    <div className="mt-auto pt-6 flex justify-center">
+                    <div className="mt-auto pt-2 flex justify-center">
                         <button
                             onClick={handleRestartDemo}
                             className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
