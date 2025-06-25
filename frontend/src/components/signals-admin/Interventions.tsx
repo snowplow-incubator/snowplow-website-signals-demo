@@ -54,10 +54,8 @@ function InterventionRow({ name, icon, description, customIndex = 0 }: Intervent
 }
 
 const defaultStatusDict: InterventionStatusDict = {
-    triggered_tour: false,
-    key_visits: false,
-    visited_contact: false,
-    contact_page_landing: false,
+    waited_on_landing_page: false,
+    customers_page_viewed: false,
     demo_complete: false,
 };
 export function Interventions({ statusDict = defaultStatusDict }: InterventionsProps) {
@@ -110,74 +108,65 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                             transition={{ duration: 0.2 }}
                             className="overflow-hidden"
                         >
-                            <div className="px-4 pb-4">
-                                {!statusDict.triggered_tour ? (
-                                    <div className="w-full p-4 text-muted-foreground flex items-center justify-around">
-                                        <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                                        Thinking of best intervention...
-                                    </div>
-                                ) : (
-                                    <>
-                                        {statusDict.triggered_tour && (
-                                            <div className="relative pl-4">
-                                                {/* Vertical line */}
-                                                <div className="absolute left-[46px] top-0 bottom-0 w-px bg-[#737373] z-0" />
-                                                <div className="relative z-10 flex flex-col gap-3 ">
-                                                    {statusDict.demo_complete && (
-                                                        <InterventionRow
-                                                            customIndex={0}
+                            <div className="px-4 pb-4">(
+                                <>
+                                    <div className="relative pl-4">
+                                        {/* Vertical line */}
+                                        <div className="absolute left-[46px] top-0 bottom-0 w-px bg-[#737373] z-0" />
+                                        <div className="relative z-10 flex flex-col gap-3 ">
+                                            {statusDict.demo_complete && (
+                                                <InterventionRow
+                                                    customIndex={0}
 
-                                                            name="Demo Completed"
-                                                            icon={<CheckCircleIcon
-                                                                fontSize="large" className="h-[45px] inline-block mr-2"
-                                                                style={{ verticalAlign: 'middle', color: '#fff', fill: "#FFF" }} />}
-                                                            description="You've completed the Snowplow Signals demo."
-                                                        />
-                                                    )}
-                                                    {(statusDict.visited_contact && statusDict.key_visits) && (
-                                                        <InterventionRow
-                                                            customIndex={1}
+                                                    name="Demo Completed"
+                                                    icon={<CheckCircleIcon
+                                                        fontSize="large" className="h-[45px] inline-block mr-2"
+                                                        style={{ verticalAlign: 'middle', color: '#fff', fill: "#FFF" }} />}
+                                                    description="You've completed the Snowplow Signals demo."
+                                                />
+                                            )}
+                                            {(statusDict.waited_on_landing_page && statusDict.customers_page_viewed) && (
+                                                <InterventionRow
+                                                    customIndex={1}
+                                                    name="Viewed Ecommerce Pages"
+                                                    icon={<PlayCircleOutlineIcon
+                                                        fontSize="large" className="h-[45px] inline-block mr-2"
+                                                        style={{ verticalAlign: 'middle', color: '#fff', fill: "#FFF" }} />}
+                                                    description="Viewed 2 ecommerce case studies, "
+                                                />
 
-                                                            name="Triggered Value Video"
-                                                            icon={<PlayCircleOutlineIcon
-                                                                fontSize="large" className="h-[45px] inline-block mr-2"
-                                                                style={{ verticalAlign: 'middle', color: '#fff', fill: "#FFF" }} />}
-                                                            description="To improve conversion in the contact page triggered value video. Has been shown to improve conversion by 20%."
-                                                        />
+                                            )}
+                                            {statusDict.waited_on_landing_page && (
+                                                <InterventionRow
+                                                    customIndex={2}
+                                                    name="Redirected to Customers Page"
+                                                    icon={<ScreenshotMonitorIcon
+                                                        color="inherit"
+                                                        fontSize="large" className="h-[45px] text-[#FFF] inline-block mr-2"
+                                                        style={{ fill: "#FFF", verticalAlign: 'middle', color: '#FFF' }} />}
+                                                    description="Waited 20 seconds on the landing page, redirected to the customers page."
+                                                />
 
-                                                    )}
-                                                    {statusDict.key_visits && (
-                                                        <InterventionRow
-                                                            customIndex={2}
+                                            )}
+                                            {/* <InterventionRow
+                                                customIndex={3}
 
-                                                            name="Redirected to Convert"
-                                                            icon={<CallMadeIcon
-                                                                color="inherit"
-                                                                fontSize="large" className="h-[45px] text-[#FFF] inline-block mr-2"
-                                                                style={{ fill: "#FFF", verticalAlign: 'middle', color: '#FFF' }} />}
-                                                            description="Visited 3 key pages"
-                                                        />
-
-                                                    )}
-                                                    <InterventionRow
-                                                        customIndex={3}
-
-                                                        name="Triggered Tour"
-                                                        icon={
-                                                            <ScreenshotMonitorIcon
-                                                                fontSize="large"
-                                                                style={{ color: "#fff", verticalAlign: 'middle', fill: "#FFF" }}
-                                                                className="h-[45px] inline-block mr-2"
-                                                            />
-                                                        }
-                                                        description="Browsed more than 10 seconds"
+                                                name="Triggered Tour"
+                                                icon={
+                                                    <ScreenshotMonitorIcon
+                                                        fontSize="large"
+                                                        style={{ color: "#fff", verticalAlign: 'middle', fill: "#FFF" }}
+                                                        className="h-[45px] inline-block mr-2"
                                                     />
-                                                </div>
+                                                }
+                                                description="Browsed more than 10 seconds"
+                                            /> */}
+                                        </div>
 
-                                            </div>
-                                        )}
-                                    </>
-                                )}
+                                    </div>
+
+                                </>
+                                )
                             </div>
                         </motion.div>
                     )}

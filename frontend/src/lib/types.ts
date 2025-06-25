@@ -4,10 +4,8 @@ export interface AttributeItem {
 }
 
 export type InterventionStatusDict = {
-  triggered_tour?: boolean;
-  key_visits?: boolean;
-  visited_contact?: boolean;
-  contact_page_landing?: boolean;
+  waited_on_landing_page?: boolean;
+  customers_page_viewed?: boolean;
   demo_complete?: boolean;
   [key: string]: boolean | undefined;
 };

@@ -19,43 +19,31 @@ export const browserAttributesList = [
 
 export const interventionsList = [
         "demo_complete",
-        "contact_page_landing",
-        "triggered_tour",
-        "visited_contact",
-        "visited_pricing",
-        "visited_use_cases",
+        "waited_on_landing_page",
+        "customers_page_viewed",
 ]
 
 export const predictionMetrics = [
-          "num_pricing_views_l7d",
+          "waited_on_landing_page",
           "num_form_engagements_l7d",
           "num_conversions_l7d",
-          "num_use_cases_views_l7d",
+          "customers_page_viewed",
 ]
 
 export const exploreSteps = {
-        solutions: { 
+        landing: { 
             href: "/use-cases", 
-            nextStep: "Visit the Solutions Page", 
-            title: "Continue the tour", 
-            description: "",
+            nextStep: "Go to Case Studies", 
+            title: "Read Case Studies", 
+            description: "Curious to read more about our customers? See how they use Snowplow to power their data strategy",
             videoSrc: undefined,
-            onClick: () => (window.location.href = "/use-cases")
+            onClick: () => (window.location.href = "/customers")
         },
-        pricing: { 
-            href: "/pricing", 
-            nextStep: "Visit the Pricing Page", 
-            title: "Continue the tour", 
-            description: "" ,
-            videoSrc: undefined,
-            onClick: () => (window.location.href = "/pricing")
-
-        },
-        contact: { 
+        ecommerce: { 
             href: "/get-started/book-a-demo-of-snowplow-bdp", 
-            nextStep: "Visit the Contact Page", 
-            title: "Continue the tour", 
-            description: "" ,
+            nextStep: "Talk to one of our experts", 
+            title: "Snowplow for Ecommerce", 
+            description: "Want to understand how Snowplow can help your ecommerce business?" ,
             videoSrc: undefined,
             onClick: () => (window.location.href = "/get-started/book-a-demo-of-snowplow-bdp")
 

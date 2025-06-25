@@ -6,7 +6,12 @@ import { AttributeItem, InterventionStatusDict } from "@/lib/types";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-
+// Add this at the top of your utils.ts or in a global.d.ts file
+declare global {
+  interface Window {
+    snowplowTracker?: (...args: any[]) => void;
+  }
+}
 
 export function getSnowplowIds() {
   // Find the cookie key that starts with "_sp_"
@@ -89,45 +94,35 @@ export function getPredictionScore(data: SignalsData) {
 export function getProgress(
   statusDict: InterventionStatusDict,
   interventionsAttributes: AttributeItem[]
-): "solutions" | "pricing" | "contact" | "video" | "submit" | "completed" | undefined {
+): "landing" | "ecommerce" | "contact" | "submit" | "completed" | undefined {
   if (!interventionsAttributes || interventionsAttributes.length === 0) return undefined;
-  if (!statusDict.triggered_tour) return undefined;
+  // if (!statusDict.triggered_tour) return undefined;
 
-  const getValue = (name: string) => {
+  const getValue = (name: string, value: number) => {
     const attr = interventionsAttributes.find(a => a.name === name);
-    return attr ? attr.value : undefined;
+    const attr_value = attr ? Number(attr.value) : 0;
+    return attr_value >= value
   };
 
-  const visitedUseCases = getValue("visited_use_cases");
-  const visitedPricing = getValue("visited_pricing");
-  const visitedContact = getValue("visited_contact");
+  const waited_on_landing_page = getValue("waited_on_landing_page", 2);
+  const customers_page_viewed = getValue("customers_page_viewed", 2);
+  // 1. Must finish landing page first
+  if (!waited_on_landing_page) 
+    {
+      return undefined;
+    }
 
-  // 1. Must finish solutions first
-  if (
-    visitedUseCases == null || visitedUseCases === 0) 
-   {
-    return "solutions";
-  }
-
-  // 2. Then pricing
-  if (
-    visitedPricing == null || visitedPricing === 0)
- {
-    return "pricing";
-  }
-
-
-  // 3. Then contact
-  if (
-    visitedContact == null || visitedContact === 0) {
-    return "contact";
-  }
-
+  // 2. Then customers page
+  if (!customers_page_viewed)
+    {
+      return "landing";
+    }
+  
   // 4. Only after all above, allow submit and completed
   if (statusDict.demo_complete) return "completed";
   if (statusDict.visited_contact) return "submit";
 
-  return "solutions";
+  return "ecommerce" ;
 }
 
 export function getInterventionStatusDict(attributes: AttributeItem[]): InterventionStatusDict {
@@ -141,13 +136,13 @@ export function getInterventionStatusDict(attributes: AttributeItem[]): Interven
     });
 
     // Check if all three key visits are true
-    const keyVisits = ["visited_contact", "visited_pricing", "visited_use_cases"];
-    result["key_visits"] = keyVisits.every(key => result[key]);
+    // const keyVisits = ["waited_on_landing_page", "customers_page_viewed"];
+    // result["key_visits"] = keyVisits.every(key => result[key]);
 
-    const remove = ["visited_pricing", "visited_use_cases"];
+    // const remove = ["visited_pricing", "visited_use_cases"];
 
-    // Remove the individual keys from the result
-    remove.forEach(key => delete result[key]);
+    // // Remove the individual keys from the result
+    // remove.forEach(key => delete result[key]);
 
     return result;
 }

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import SignpostOutlinedIcon from '@mui/icons-material/SignpostOutlined';
 import { exploreSteps } from "@/lib/constants"
+import { useState, useEffect } from "react";
 
 interface ExploreComponentProps {
     className?: string
@@ -54,11 +55,27 @@ function ExploreComponent({ className, title, description, onClick, nextStep, vi
     )
 }
 export function Explore({ className, progress }: ExploreProps) {
+    const [clickedSteps, setClickedSteps] = useState<{ [key: string]: boolean }>(() => {
+        // Load from localStorage or default to empty object
+        const stored = localStorage.getItem("clickedSteps");
+        return stored ? JSON.parse(stored) : {};
+    });
+
+    useEffect(() => {
+        // Save to localStorage whenever clickedSteps changes
+        localStorage.setItem("clickedSteps", JSON.stringify(clickedSteps));
+    }, [clickedSteps]);
+
     const step = progress == undefined ? undefined : progress;
-    if (!step) {
-        return null; // or return a default component if needed
-    }
+    if (!step) return null;
     const stepConfig = exploreSteps[step as keyof typeof exploreSteps];
+
+    const handleClick = () => {
+        setClickedSteps(prev => ({ ...prev, [step]: true }));
+        stepConfig?.onClick();
+    };
+
+    if (clickedSteps[step]) return null;
 
     return (
         <>
@@ -67,7 +84,7 @@ export function Explore({ className, progress }: ExploreProps) {
                     className={className}
                     title={stepConfig.title}
                     description={stepConfig?.description}
-                    onClick={stepConfig.onClick}
+                    onClick={handleClick}
                     nextStep={stepConfig.nextStep}
                     videoSrc={stepConfig.videoSrc}
                 />
