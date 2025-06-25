@@ -45,9 +45,15 @@ export function clearSpCookies() {
         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
       }
     });
+
+    if (typeof window !== "undefined" && typeof window.snowplowTracker === "function") {
+      window.snowplowTracker('clearUserData');
+    }
+
     window.location.reload();
     console.log("Clearing SP ID cookie:");
 }
+
 
 interface SignalsData {
   [key: string]: any[];
