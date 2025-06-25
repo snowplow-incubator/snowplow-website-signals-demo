@@ -1,11 +1,8 @@
 import {clearSpCookies} from "./utils";
 
 export const clickAttributesList = [    
-          "num_sessions_l7d",
           "num_page_views_l7d",
           "num_page_pings_l7d",
-          "num_pricing_views_l7d",
-          "num_use_cases_views_l7d",
           "num_conversions_l7d",
           "num_form_engagements_l7d",
 ]
@@ -13,8 +10,6 @@ export const clickAttributesList = [
 export const browserAttributesList = [
           "latest_app_id",
           "latest_device_class",
-          "first_mkt_medium_l30d",
-          "first_refr_medium_l30d"
 ]
 
 export const interventionsList = [
@@ -71,7 +66,7 @@ export const exploreSteps = {
             title: "Demo Complete!",
             description: "You've been classified as likely to convert based on your behaviour",
             videoSrc: undefined,
-            onClick: handleRestartDemo
+            onClick: () => handleRestartDemo()
     }
 };
 
@@ -80,7 +75,7 @@ export function handleRestartDemo() {
     localStorage.removeItem("openWidget");
     localStorage.removeItem("attributesOpen");
     localStorage.removeItem("interventionsOpen");
-    localStorage.removeItem("signals-demo");
+    localStorage.removeItem("signalsDemo");
     localStorage.removeItem("clickedSteps");
     // Clear Snowplow cookie and reload
     clearSpCookies();

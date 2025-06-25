@@ -31,7 +31,7 @@ function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const signalsDemoParam = params.get("signals-demo") === "true";
-    const signalsDemoStorage = localStorage.getItem("signals-demo") === "true";
+    const signalsDemoStorage = localStorage.getItem("signalsDemo") === "true";
     if (signalsDemoParam || signalsDemoStorage) {
       setIsSignalsDemo(true);
     }
