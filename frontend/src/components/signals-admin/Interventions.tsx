@@ -139,7 +139,7 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                                                         icon={<PlayCircleOutlineIcon
                                                             fontSize="large" className="h-[45px] inline-block mr-2"
                                                             style={{ verticalAlign: 'middle', color: '#fff', fill: "#FFF" }} />}
-                                                        description="Viewed 2 ecommerce case studies, "
+                                                        description="Viewed 2 ecommerce case studies."
                                                     />
 
                                                 )}

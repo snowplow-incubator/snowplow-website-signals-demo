@@ -66,7 +66,7 @@ export const exploreSteps = {
 
         },
         completed: { 
-            href: "https://snowplow.io", 
+            href: "https://snowplow.io/", 
             nextStep: "Return to Main Page", 
             title: "Demo Complete!",
             description: "You've been classified as likely to convert based on your behaviour",

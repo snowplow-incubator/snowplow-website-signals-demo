@@ -20,9 +20,9 @@ interface ExploreProps {
 
 function ExploreComponent({ className, title, description, onClick, nextStep, videoSrc = undefined }: ExploreComponentProps) {
     return (
-        <div className={cn("bg-white rounded-lg p-4 h-[300px] w-[360px] border border-slate-200", className)}>
-            <div className="bg-slate-100 rounded-sm p-4 h-[130px]">
-                {/* {videoSrc ? (
+        <div className={cn("bg-white rounded-lg p-4 h-[200px] w-[360px] border border-slate-200", className)}>
+            {/* <div className="bg-slate-100 rounded-sm p-4 h-[130px]">
+                {videoSrc ? (
                     <iframe
                         width="220"
                         height="120"
@@ -33,8 +33,8 @@ function ExploreComponent({ className, title, description, onClick, nextStep, vi
                         className="rounded"
                     />
                 ) : null
-                } */}
-            </div>
+                }
+            </div> */}
             <div className="space-y-3">
                 <h3 className="pt-2 text-lg font-semibold">
                     <SignpostOutlinedIcon fontSize="small" className="h-[25px] inline-block mr-2" style={{ verticalAlign: 'middle' }} />
