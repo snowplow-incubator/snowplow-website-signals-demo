@@ -69,17 +69,8 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
         localStorage.setItem("interventionsOpen", interventionsOpen ? "true" : "false");
     }, [interventionsOpen]);
 
-    // If triggered tour not true return loading Widget
-
-
-    // If triggered tour true - Triggered Tour Intevetion
-    // If visited 3 key pages true - Key Visits Intervention
-    // If visited contact visited - Video
-    // If demo complete - show converted
-
     return (
         <>
-            {/* Interventions Accordion */}
             <div className="bg-[#282828] border border-border rounded-lg mb-4 ">
                 <button
                     onClick={() => setInterventionsOpen(!interventionsOpen)}
@@ -98,6 +89,8 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                         )}
                     </div>
                 </button>
+
+
                 <AnimatePresence initial={false}>
                     {interventionsOpen && (
                         <motion.div
@@ -108,7 +101,23 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                             transition={{ duration: 0.2 }}
                             className="overflow-hidden"
                         >
-                            <div className="px-4 pb-4 max-h-32 overflow-y-auto">
+                            <style>
+                                {`
+                                .interventions-scroll::-webkit-scrollbar-track {
+                                    background: #282828;
+                                }
+                                .interventions-scroll::-webkit-scrollbar-thumb {
+                                    background: #888;
+                                }
+                                .interventions-scroll::-webkit-scrollbar-thumb:hover {
+                                    background: #101010;
+                                }
+                                .interventions-scroll::-webkit-scrollbar {
+                                    width: 4px;
+                                }
+                                `}
+                            </style>
+                            <div className="px-4 pb-4 max-h-32 overflow-y-auto interventions-scroll">
                                 {!statusDict.waited_on_landing_page ? (
                                     <div className="w-full p-4 text-muted-foreground flex items-center justify-around">
                                         <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
@@ -155,19 +164,7 @@ export function Interventions({ statusDict = defaultStatusDict }: InterventionsP
                                                     />
 
                                                 )}
-                                                {/* <InterventionRow
-                                                customIndex={3}
 
-                                                name="Triggered Tour"
-                                                icon={
-                                                    <ScreenshotMonitorIcon
-                                                        fontSize="large"
-                                                        style={{ color: "#fff", verticalAlign: 'middle', fill: "#FFF" }}
-                                                        className="h-[45px] inline-block mr-2"
-                                                    />
-                                                }
-                                                description="Browsed more than 10 seconds"
-                                            /> */}
                                             </div>
 
                                         </div>
