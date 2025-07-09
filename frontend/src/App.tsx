@@ -37,6 +37,12 @@ function App() {
     }
   }, []);
 
+  if (!isSignalsDemo) {
+    return (
+      <></>
+    );
+  }
+
   useEffect(() => {
     if (openWidget) {
       document.body.style.marginRight = `450px`;
