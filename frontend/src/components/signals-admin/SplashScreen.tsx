@@ -51,7 +51,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
 
     return (
         <motion.div
-            className="fixed top-[79px] bottom-0 left-0 right-0 bg-foreground/95 z-50 flex items-center justify-center p-4"
+            className="fixed top-[79px] inset-0 bg-foreground/95 z-50 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
