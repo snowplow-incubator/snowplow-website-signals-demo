@@ -100,11 +100,10 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         </>
                     )}
                     <div className="flex justify-center items-center gap-2 mt-4">
-
                         <div className="mt-auto pt-2 flex justify-center">
                             <button
                                 onClick={handleRestartDemo}
-                                className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
+                                className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828] w-[135px] transition"
                             >
                                 Restart Demo
                             </button>
@@ -112,7 +111,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         <div className="mt-auto pt-2 flex justify-center">
                             <button
                                 onClick={handleEndDemo}
-                                className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
+                                className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828] w-[135px] transition"
                             >
                                 End Demo
                             </button>
