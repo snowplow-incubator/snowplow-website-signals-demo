@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SplashScreen } from "./components/signals-admin/SplashScreen";
 import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
-import { getSnowplowIds, formatAttributes, getPredictionScore } from "./lib/utils";
+import { getSnowplowIds, formatAttributes, getPredictionScore, getProgress } from "./lib/utils";
 import { ArrowLeftFromLine } from "lucide-react"
 import { clickAttributesList, browserAttributesList, interventionsList } from "./lib/constants";
 
@@ -50,6 +50,7 @@ function App() {
   }, [openWidget]);
 
   useEffect(() => {
+    if (!isSignalsDemo) return;
     let firstLoad = true;
     const fetchAttributes = async () => {
       const ids = getSnowplowIds();
@@ -75,13 +76,10 @@ function App() {
       }
     };
 
-    if (!isSignalsDemo) {
-      return;
-    }
     fetchAttributes(); // Run once immediately
     const interval = setInterval(fetchAttributes, 2000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isSignalsDemo]);
 
   const handleOpenDemo = () => {
     setIsSignalsDemo(false)
