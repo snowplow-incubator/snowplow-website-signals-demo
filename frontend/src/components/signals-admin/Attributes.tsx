@@ -54,9 +54,6 @@ export function Attributes({ browserAttributes = [], clickAttributes = [] }: Att
     }, [attributesOpen]);
     return (
         <>
-            {/* Attributes Accordion */}
-
-
             <div className="bg-[#282828] border border-border rounded-lg mb-1">
                 <button
                     onClick={() => setAttributesOpen(!attributesOpen)}

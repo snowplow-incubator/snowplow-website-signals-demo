@@ -15,14 +15,11 @@ declare global {
 
 export function getSnowplowIds() {
   // Find the cookie key that starts with "_sp_"
-  console.log("Getting SP ID cookie:");
-  console.log(document.cookie);
   const cookies = document.cookie.split("; ");
   const spCookie = cookies.find((c) => {
     const [name] = c.split("=");
     return name.startsWith("_sp_") && name.toLowerCase().split(".")[0].endsWith("id");
   });  
-  console.log("SP Cookie found:", spCookie);
   if (!spCookie) return null;
 
   // Get the value part after '='
@@ -59,7 +56,6 @@ export function clearSpCookies() {
     }
 
     window.location.reload();
-    console.log("Clearing SP ID cookie:");
 }
 
 

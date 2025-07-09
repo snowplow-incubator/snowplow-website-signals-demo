@@ -3,8 +3,8 @@ import {clearSpCookies} from "./utils";
 export const clickAttributesList = [    
           "num_page_views_l7d",
           "num_page_pings_l7d",
-          "num_conversions_l7d",
           "num_form_engagements_l7d",
+          "num_conversions_l7d",
 ]
 
 export const browserAttributesList = [
@@ -43,13 +43,6 @@ export const exploreSteps = {
             onClick: () => (window.location.href = "/get-started/book-a-demo-of-snowplow-bdp")
 
         },
-        // video: { 
-        //     href: "", 
-        //     nextStep: "Watch the Video", 
-        //     title: "Value Video", 
-        //     description: "", 
-        //     videoSrc: "https://www.youtube.com/embed/_o-TO1GB1Bo?autoplay=1&mute=1",
-        //     onClick: () => window.open("https://www.youtube.com/watch?v=_o-TO1GB1Bo", "_blank")         },
         submit: { 
             href: "/get-started/book-a-demo-of-snowplow-bdp", 
             nextStep: "Submit your details", 
@@ -71,13 +64,20 @@ export const exploreSteps = {
 };
 
 export function handleRestartDemo() {
-    // Clear relevant localStorage keys
     localStorage.removeItem("openWidget");
     localStorage.removeItem("attributesOpen");
     localStorage.removeItem("interventionsOpen");
     localStorage.removeItem("signalsDemo");
     localStorage.removeItem("clickedSteps");
-    // Clear Snowplow cookie and reload
     clearSpCookies();
     window.location.href = "https://snowplow.io?signals-demo=true";
+}
+
+export function handleEndDemo() {
+    localStorage.removeItem("openWidget");
+    localStorage.removeItem("attributesOpen");
+    localStorage.removeItem("interventionsOpen");
+    localStorage.removeItem("signalsDemo");
+    localStorage.removeItem("clickedSteps");
+    window.location.href = "https://snowplow.io";
 }

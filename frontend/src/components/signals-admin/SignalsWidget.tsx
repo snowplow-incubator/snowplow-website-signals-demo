@@ -24,20 +24,11 @@ interface SignalsWidgetProps {
 export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserAttributes = [], clickAttributes = [], interventionsAttributes = [], loading }: SignalsWidgetProps) {
     const statusDict = getInterventionStatusDict(interventionsAttributes)
     const progress = getProgress(statusDict, interventionsAttributes)
-    console.log(progress, "Progress in SignalsWidget")
 
     return (
         <>
-            {/* Fixed Explore component */}
             {isOpen && (
-                <div
-                    className="fixed bottom-6 right-[500px]  z-40"
-                    style={{ pointerEvents: "auto", width: "320px" }}
-                >
-                    <div style={{ pointerEvents: "auto", width: "100%" }}>
-                        <Explore progress={progress} className="shadow-lg" />
-                    </div>
-                </div>
+                <Explore progress={progress} className="shadow-lg" />
             )}
 
             <motion.div
@@ -56,17 +47,12 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         initialVelocityY={-20}
                     />}
 
-                    {/* Header */}
                     <div className="flex justify-between items-start mb-4">
                         <div className="flex flex-col">
                             <div className="flex flex-row items-start gap-2 mb-1">
                                 <SnowplowLogo variant="icon" size="sm" />
                                 <h2 className="text-primary text-xl font-bold">SIGNALS</h2>
                             </div>
-                            {/* <p className="text-muted-foreground text-sm/6">
-                                You're now seeing a live stream of behavioral attributes according to your current browsing and interactions.
-                                Note: Every attribute, scoring rule and intervention is fully customizable and defined to fit your business.
-                            </p> */}
                         </div>
                         <button
                             onClick={onToggle}
@@ -77,15 +63,12 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         </button>
                     </div>
 
-                    {/* Loading skeleton or real content */}
                     {loading ? (
                         <div>
-                            {/* Skeleton for Predicted Conversion Score */}
                             <div className="mb-6 animate-pulse">
                                 <div className="h-4 bg-[#282828] rounded-full w-full mb-2" />
                                 <div className="h-4 bg-[#282828] rounded-full w-1/4" />
                             </div>
-                            {/* Skeleton for Attributes */}
                             <div className="mb-6 animate-pulse">
                                 <div className="h-6 bg-[#282828] rounded w-1/2 mb-2" />
                                 <div className="h-4 bg-[#282828] rounded w-full mb-1" />
@@ -95,10 +78,8 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                         </div>
                     ) : (
                         <>
-                            {/* Predicted Conversion Score */}
                             <div className="mb-6">
                                 <h3 className="text-foreground font-bold text-sm mb-2">Propensity to Convert</h3>
-                                {/* <h3 className="text-muted-foreground font-bold text-sm mb-2">This score updates live based on your behavior</h3> */}
                                 <div className="flex items-center gap-2">
                                     <div className="h-4 bg-[#282828] rounded-full overflow-hidden mb-1 w-full">
                                         <motion.div
@@ -118,7 +99,14 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                             <Interventions statusDict={statusDict} />
                         </>
                     )}
-                    {/* Restart Demo Button at the bottom */}
+                    <div className="mt-auto pt-2 flex justify-center">
+                        <button
+                            onClick={handleRestartDemo}
+                            className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
+                        >
+                            Restart Demo
+                        </button>
+                    </div>
                     <div className="mt-auto pt-2 flex justify-center">
                         <button
                             onClick={handleRestartDemo}
