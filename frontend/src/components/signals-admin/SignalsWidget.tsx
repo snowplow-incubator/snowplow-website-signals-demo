@@ -49,7 +49,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
 
                     <div className="flex justify-between items-start mb-4">
                         <div className="flex flex-col">
-                            <div className="flex flex-row items-start gap-2 mb-1">
+                            <div className="flex flex-row items-center justify-center gap-2 mb-1">
                                 <SnowplowLogo variant="icon" size="sm" />
                                 <h2 className="text-primary text-xl font-bold">SIGNALS</h2>
                             </div>

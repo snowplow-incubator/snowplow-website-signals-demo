@@ -59,7 +59,7 @@ export const exploreSteps = {
             title: "Demo Complete!",
             description: "You've been classified as likely to convert based on your behaviour",
             videoSrc: undefined,
-            onClick: () => handleRestartDemo()
+            onClick: () => handleEndDemo()
     }
 };
 
