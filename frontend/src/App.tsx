@@ -38,9 +38,7 @@ function App() {
   }, []);
 
   if (!isSignalsDemo) {
-    return (
-      <></>
-    );
+    return null;
   }
 
   useEffect(() => {
@@ -54,7 +52,6 @@ function App() {
     };
   }, [openWidget]);
 
-  // Polling for the attribute showcase when we have an available API
   useEffect(() => {
     let firstLoad = true;
     const fetchAttributes = async () => {
