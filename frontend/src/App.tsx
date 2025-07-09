@@ -50,9 +50,9 @@ function App() {
   }, [openWidget]);
 
   useEffect(() => {
-    if (!isSignalsDemo) return;
     let firstLoad = true;
     const fetchAttributes = async () => {
+      if (!openWidget) return;
       const ids = getSnowplowIds();
       if (ids) {
         const res = await fetch(
