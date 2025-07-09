@@ -66,7 +66,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
             </Button>
 
             <motion.div
-                className="bg-background bg-white rounded-xl px-10 py-10 max-w-[600px] shadow-lg border border-gray-200"
+                className="bg-background bg-white rounded-xl px-10 py-10 max-w-600px shadow-lg border border-gray-200"
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
