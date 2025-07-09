@@ -51,7 +51,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
 
     return (
         <motion.div
-            className="fixed inset-0 pt-[85px] pr-[85px] bg-foreground/95 z-50 flex items-center justify-center p-4"
+            className="fixed top-[85px] inset-0 bg-foreground/95 z-50 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -66,7 +66,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
             </Button>
 
             <motion.div
-                className="bg-background bg-white rounded-xl px-10 py-10 max-w-[640px] shadow-lg border border-gray-200"
+                className="bg-background bg-white mt-6 mr-8 rounded-xl px-10 py-10 max-w-[640px] shadow-lg border border-gray-200"
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
