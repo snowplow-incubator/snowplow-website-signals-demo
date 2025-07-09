@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { SplashScreen } from "./components/signals-admin/SplashScreen";
 import { SignalsWidget } from "./components/signals-admin/SignalsWidget";
-import { getSnowplowIds, formatAttributes, getPredictionScore, getProgress } from "./lib/utils";
+import { getSnowplowIds, formatAttributes, getPredictionScore } from "./lib/utils";
 import { ArrowLeftFromLine } from "lucide-react"
 import { clickAttributesList, browserAttributesList, interventionsList } from "./lib/constants";
 
@@ -10,7 +10,7 @@ function App() {
   if (snowplowIds === null) {
     localStorage.setItem("openWidget", "false");
   }
-  const [isSignalsDemo, setIsSignalsDemo] = useState(false);
+  const [isSignalsDemo, setIsSignalsDemo] = useState<boolean | null>(null);
   const [openWidget, setOpenWidget] = useState(() => {
     const stored = localStorage.getItem("openWidget");
     return stored === "true";
@@ -37,9 +37,6 @@ function App() {
     }
   }, []);
 
-  if (!isSignalsDemo) {
-    return null;
-  }
 
   useEffect(() => {
     if (openWidget) {
@@ -78,6 +75,9 @@ function App() {
       }
     };
 
+    if (!isSignalsDemo) {
+      return;
+    }
     fetchAttributes(); // Run once immediately
     const interval = setInterval(fetchAttributes, 2000);
     return () => clearInterval(interval);
