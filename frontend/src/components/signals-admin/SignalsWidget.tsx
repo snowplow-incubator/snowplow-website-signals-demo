@@ -8,7 +8,7 @@ import { Attributes } from "./Attributes"
 import { Interventions } from "./Interventions"
 import { AttributeItem } from "@/lib/types"
 import { getInterventionStatusDict, getProgress } from "@/lib/utils"
-import { handleRestartDemo } from "@/lib/constants"
+import { handleRestartDemo, handleEndDemo } from "@/lib/constants"
 
 interface SignalsWidgetProps {
     conversionScore: number
@@ -99,21 +99,24 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
                             <Interventions statusDict={statusDict} />
                         </>
                     )}
-                    <div className="mt-auto pt-2 flex justify-center">
-                        <button
-                            onClick={handleRestartDemo}
-                            className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
-                        >
-                            Restart Demo
-                        </button>
-                    </div>
-                    <div className="mt-auto pt-2 flex justify-center">
-                        <button
-                            onClick={handleRestartDemo}
-                            className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
-                        >
-                            Restart Demo
-                        </button>
+                    <div className="flex justify-center items-center gap-2 mt-4">
+
+                        <div className="mt-auto pt-2 flex justify-center">
+                            <button
+                                onClick={handleRestartDemo}
+                                className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
+                            >
+                                Restart Demo
+                            </button>
+                        </div>
+                        <div className="mt-auto pt-2 flex justify-center">
+                            <button
+                                onClick={handleEndDemo}
+                                className="px-4 py-2 bg-[#282828] text-white rounded hover:bg-[#282828]  transition"
+                            >
+                                End Demo
+                            </button>
+                        </div>
                     </div>
 
                 </div>
