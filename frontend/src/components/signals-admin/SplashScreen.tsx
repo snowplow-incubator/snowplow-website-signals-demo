@@ -51,7 +51,7 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
 
     return (
         <motion.div
-            className="fixed top-[79px] inset-0 bg-foreground/95 z-50 flex items-center justify-center p-4"
+            className="fixed top-[79px] bottom-0 left-0 right-0 bg-foreground/95 z-50 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -72,14 +72,14 @@ export function SplashScreen({ onClose }: SplashScreenProps) {
                 transition={{ delay: 0.1 }}
             >
                 <div className=" text-left mb-2">
-                    <motion.div
+                    {/* <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                         className="flex mb-2"
                     >
                         <SnowplowLogo variant="full" size="md" />
-                    </motion.div>
+                    </motion.div> */}
 
                     <motion.h1
                         initial={{ opacity: 0 }}
