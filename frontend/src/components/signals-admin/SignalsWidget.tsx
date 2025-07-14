@@ -25,6 +25,7 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
     const statusDict = getInterventionStatusDict(interventionsAttributes)
     const progress = getProgress(statusDict, interventionsAttributes)
 
+    const width = isOpen ? 450 : 0;
     return (
         <>
             {isOpen && (
@@ -32,7 +33,8 @@ export function SignalsWidget({ conversionScore = 50, isOpen, onToggle, browserA
             )}
 
             <motion.div
-                className="dark h-screen right-0 w-[450px] bg-[#101010] shadow-xl z-50 overflow-y-auto"
+                className="dark h-screen right-0 bg-[#101010] shadow-xl z-50 overflow-y-auto"
+                style={{ width: `${width}px` }}
                 initial={{ x: "100%" }}
                 animate={{ x: isOpen ? 0 : "100%" }}
                 transition={{ type: "spring", damping: 30, stiffness: 200 }}
